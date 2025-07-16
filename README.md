@@ -9,6 +9,17 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 > Coming Soon...
 
 ---
+## ⚙️ Tech Stack
+
+- **Frontend**: React, Tailwind, Zustand, Clerk, Vite, ShadCN UI
+- **Backend**: Node.js, Express, MongoDB, Mongoose
+- **Real-time**: Socket.io
+- **Auth**: Clerk
+- **Database**: MongoDB Atlas
+- **Deployment**: Vercel + Render (suggested)
+- **State**: Zustand
+
+---
 
 ## ✨ Features
 
@@ -180,17 +191,7 @@ AdvanceSpotify/
 
 ---
 
-## ⚙️ Tech Stack
 
-- **Frontend**: React, Tailwind, Zustand, Clerk, Vite, ShadCN UI
-- **Backend**: Node.js, Express, MongoDB, Mongoose
-- **Real-time**: Socket.io
-- **Auth**: Clerk
-- **Database**: MongoDB Atlas
-- **Deployment**: Vercel + Render (suggested)
-- **State**: Zustand
-
----
 
 ## ⚙️ Setup and Installation
 
@@ -216,7 +217,7 @@ yarn install
 ```bash
 cd ../backend
 npm install
- or
+# or
 yarn install
 ```
 
@@ -259,13 +260,13 @@ The frontend should be running on port 3000, and will communicate with the backe
 ```
 ### 🧪 Future Features
 
-    ✅ Voice messages
+    ⏳ Voice messages
 
-    ✅ Song reactions
+    ⏳ Song reactions
 
-    ✅ Realtime search
+    ⏳ Realtime search
 
-    ✅ Chat read receipts
+    ⏳ Chat read receipts
 
     ⏳ Playlists & libraries
 
