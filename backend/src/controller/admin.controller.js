@@ -1,6 +1,7 @@
 import { Song } from "../models/song.model.js";
 import { Album } from "../models/album.model.js";
-import cloudinary from "../libs/cloudinary.js";
+import cloudinary from "../lib/cloudinary.js";
+
 // helper function for cloudinary uploads
 const uploadToCloudinary = async (file) => {
 	try {
@@ -51,7 +52,6 @@ export const createSong = async (req, res, next) => {
 	}
 };
 
-
 export const deleteSong = async (req, res, next) => {
 	try {
 		const { id } = req.params;
@@ -73,7 +73,6 @@ export const deleteSong = async (req, res, next) => {
 		next(error);
 	}
 };
-
 
 export const createAlbum = async (req, res, next) => {
 	try {
