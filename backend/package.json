@@ -14,7 +14,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@clerk/express": "^1.7.9",
+		"@clerk/backend": "^2.4.5",
 		"cloudinary": "^2.5.1",
 		"cors": "^2.8.5",
 		"dotenv": "^16.4.5",
