@@ -82,6 +82,10 @@ app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
 
+app.get("/api/health", (req, res) => {
+	res.status(200).json({ message: "Server is healthy" });
+});
+
 if (process.env.NODE_ENV === "production") {
 	const frontendDistPath = path.join(__dirname, "frontend", "dist");
 	app.use(express.static(frontendDistPath));
