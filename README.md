@@ -226,10 +226,23 @@ yarn install
 
 Create a .env file in the backend/ directory with the following contents:
 ```bash
-MONGO_URI=your_mongodb_connection_string
-CLERK_SECRET_KEY=your_clerk_secret_key
-PORT=5000
-# Add other necessary environment variables here
+PORT=
+MONGODB_URI=
+
+ADMIN_EMAIL=
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+NODE_ENV=
+
+CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+```
+Create a .env file in the frontend/ directory with the following contents:
+```bash
+VITE_CLERK_PUBLISHABLE_KEY=
 ```
 🔒 Make sure not to commit .env to version control.
 
