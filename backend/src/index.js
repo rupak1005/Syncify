@@ -27,21 +27,9 @@ const PORT = process.env.PORT;
 const httpServer = createServer(app);
 initializeSocket(httpServer);
 
-const allowedOrigins = [
-	"http://localhost:3000",
-	"http://localhost:5173",
-	"https://advance-spotify.onrender.com",
-];
-
 app.use(
 	cors({
-		origin: (origin, callback) => {
-			if (!origin || allowedOrigins.includes(origin)) {
-				callback(null, true);
-			} else {
-				callback(new Error("Not allowed by CORS"));
-			}
-		},
+		origin: "http://localhost:3000",
 		credentials: true,
 	})
 );
@@ -87,11 +75,9 @@ app.get("/api/health", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "production") {
-	const frontendDistPath = path.join(__dirname, "frontend", "dist");
-	app.use(express.static(frontendDistPath));
-
+	app.use(express.static(path.join(__dirname, "../frontend/dist")));
 	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(frontendDistPath, "index.html"));
+		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
 	});
 }
 

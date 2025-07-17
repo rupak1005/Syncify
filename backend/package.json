@@ -6,7 +6,6 @@
 	"scripts": {
 		"dev": "nodemon src/index.js",
 		"start": "node src/index.js",
-		"build": "npm install && npm install --prefix ../frontend && npm run build --prefix ../frontend",
 		"seed:songs": "node src/seeds/songs.js",
 		"seed:albums": "node src/seeds/albums.js"
 	},
