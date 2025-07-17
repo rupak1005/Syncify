@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: advance-spotify
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: "npm run build"
+    startCommand: "npm run start"
+    healthCheckPath: "/api/health"
+    envVars:
+      - key: NODE_VERSION
+        value: 20.15.1
+      - key: NODE_ENV
+        value: production
+      - fromGroup: spotify-env
