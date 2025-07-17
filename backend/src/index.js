@@ -27,9 +27,21 @@ const PORT = process.env.PORT;
 const httpServer = createServer(app);
 initializeSocket(httpServer);
 
+const allowedOrigins = [
+	"http://localhost:3000",
+	"http://localhost:5173",
+	"YOUR_FRONTEND_URL",
+];
+
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: (origin, callback) => {
+			if (!origin || allowedOrigins.includes(origin)) {
+				callback(null, true);
+			} else {
+				callback(new Error("Not allowed by CORS"));
+			}
+		},
 		credentials: true,
 	})
 );
@@ -74,12 +86,6 @@ app.get("/api/health", (req, res) => {
 	res.status(200).json({ message: "Server is healthy" });
 });
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "../frontend/dist")));
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
-	});
-}
 
 // error handler
 app.use((err, req, res, next) => {
