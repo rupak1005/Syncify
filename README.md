@@ -202,8 +202,8 @@ Follow the steps below to get this project running locally on your machine.
 ### 🧱 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd <your-project-folder>
+git clone https://github.com/rupak1005/AdvanceSpotify.git
+cd AdvanceSpotify/
 ```
 ### 📦 2. Install Frontend Dependencies
 ```bash
@@ -231,7 +231,7 @@ CLERK_SECRET_KEY=your_clerk_secret_key
 PORT=5000
 # Add other necessary environment variables here
 ```
-    🔒 Make sure not to commit .env to version control.
+🔒 Make sure not to commit .env to version control.
 
 
 
