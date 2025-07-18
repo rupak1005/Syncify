@@ -20,7 +20,7 @@ const FeaturedSection = () => {
 					<img
 						src={song.imageUrl}
 						alt={song.title}
-						className='w-16  sm:w-20 h-fit sm:h-20 object-cover m-auto rounded-sm'
+						className='w-16  sm:w-20 h-fit  sm:h-20 object-cover m-2 rounded-sm'
 					/>
 					<div className='flex-1 p-4 '>
 						<p className='font-medium truncate'>{song.title}</p>
