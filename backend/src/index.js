@@ -30,7 +30,7 @@ initializeSocket(httpServer);
 const allowedOrigins = [
 	"http://localhost:3000",
 	"http://localhost:5173",
-	"YOUR_FRONTEND_URL",
+	"https://advancespotify.onrender.com",
 ];
 
 app.use(
