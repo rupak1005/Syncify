@@ -21,9 +21,9 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 	}, [fetchAlbums]);
 
 	return (
-		<div className='h-full flex flex-col gap-2'>
+		<div className='h-full flex flex-col gap-2 p-2'>
 			{/* Logo and Hamburger */}
-			<div className='flex items-center justify-between py-4 px-2'>
+			<div className='flex items-center justify-between py-4 '>
 				{isMobile && setSidebarOpen && (
 					<button
 						className='md:hidden p-2 rounded-md bg-zinc-900/80 hover:bg-zinc-800 mr-2'
@@ -39,7 +39,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 			</div>
 
 			{/* Navigation menu */}
-			<div className='rounded-lg bg-zinc-900 p-4'>
+			<div className='rounded-lg bg-zinc-900 p-2'>
 				<div className='space-y-2'>
 					<Link
 						to={"/"}
@@ -72,7 +72,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 			</div>
 
 			{/* Library section */}
-			<div className='flex-1 rounded-lg bg-zinc-900 p-4'>
+			<div className='flex-1 rounded-lg bg-zinc-900 p-2'>
 				<div className='flex items-center justify-between mb-4'>
 					<div className='flex items-center text-white px-2'>
 						<Library className='size-5 mr-2' />

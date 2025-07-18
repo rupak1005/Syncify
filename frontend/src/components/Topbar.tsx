@@ -20,10 +20,10 @@ const Topbar = () => {
 				<img src='/spotify.png' className={cn('size-8', location.pathname === '/' ? 'sm:inline hidden' : '')} alt='Spotify logo' />
 				Spotify
 			</div>
-			<div className='flex items-center gap-4'>
+			<div className='flex items-center gap-2'>
 				{isAdmin && (
 					<Link to={"/admin"} className={cn(buttonVariants({ variant: "outline" }))}>
-						<LayoutDashboardIcon className='size-4  mr-2' />
+						<LayoutDashboardIcon className='size-4  mr-2 ' />
 						<span className="sm:inline hidden">Admin Dashboard</span>
 					</Link>
 				)}

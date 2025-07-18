@@ -34,7 +34,7 @@ const ChatPage = () => {
 		<main className='h-full rounded-lg bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden'>
 			<Topbar />
 
-			<div className='grid lg:grid-cols-[300px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-180px)]'>
+			<div className='grid lg:grid-cols-[250px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-180px)] '>
 				<UsersList />
 
 				{/* chat message */}
@@ -78,7 +78,7 @@ const ChatPage = () => {
 								</div>
 							</ScrollArea>
 
-							<MessageInput />
+							< MessageInput />
 						</>
 					) : (
 						<NoConversationPlaceholder />
