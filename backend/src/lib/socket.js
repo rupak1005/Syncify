@@ -4,7 +4,7 @@ import { Message } from "../models/message.model.js";
 export const initializeSocket = (server) => {
 	const io = new Server(server, {
 		cors: {
-			origin: ["https://advancespotify.onrender.com","http://localhost:3000"],
+			origin: ["https://advancespotify.onrender.com","http://localhost:3000","https://advancespotify3.onrender.com"],
 			credentials: true,
 		},
 	});
