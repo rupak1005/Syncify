@@ -6,7 +6,7 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 
 ## 🚀 Live Demo
 
-> Coming Soon...
+> https://advancespotify.onrender.com/
 
 ---
 
