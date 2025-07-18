@@ -21,7 +21,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 	}, [fetchAlbums]);
 
 	return (
-		<div className='h-full flex flex-col gap-2 p-2'>
+		<div className='h-full flex flex-col gap-2 p-2 '>
 			{/* Logo and Hamburger */}
 			<div className='flex items-center justify-between py-4 '>
 				{isMobile && setSidebarOpen && (
