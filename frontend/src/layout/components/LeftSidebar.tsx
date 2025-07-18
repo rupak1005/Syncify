@@ -4,23 +4,42 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { SignedIn } from "@clerk/clerk-react";
-import { HomeIcon, Library, MessageCircle } from "lucide-react";
+import { HomeIcon, Library, MessageCircle, Menu, X } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const LeftSidebar = () => {
+interface LeftSidebarProps {
+	isMobile?: boolean;
+	sidebarOpen?: boolean;
+	setSidebarOpen?: (open: boolean) => void;
+}
+
+const LeftSidebar = ({ isMobile, sidebarOpen, setSidebarOpen }: LeftSidebarProps) => {
 	const { albums, fetchAlbums, isLoading } = useMusicStore();
 
 	useEffect(() => {
 		fetchAlbums();
 	}, [fetchAlbums]);
 
-	console.log({ albums });
-
 	return (
 		<div className='h-full flex flex-col gap-2'>
-			{/* Navigation menu */}
+			{/* Logo and Hamburger */}
+			<div className='flex items-center justify-between py-4 px-2'>
+				{isMobile && setSidebarOpen && (
+					<button
+						className='md:hidden p-2 rounded-md bg-zinc-900/80 hover:bg-zinc-800 mr-2'
+						onClick={() => setSidebarOpen(false)}
+						aria-label='Close sidebar'
+					>
+						<X className='w-6 h-6' />
+					</button>
+				)}
+				<Link to='/' className='flex-1 flex justify-center md:justify-start'>
+					<img src='/spotify.png' alt='Logo' className='h-8 w-auto md:h-10' />
+				</Link>
+			</div>
 
+			{/* Navigation menu */}
 			<div className='rounded-lg bg-zinc-900 p-4'>
 				<div className='space-y-2'>
 					<Link
@@ -33,7 +52,7 @@ const LeftSidebar = () => {
 						)}
 					>
 						<HomeIcon className='mr-2 size-5' />
-						<span className='hidden md:inline'>Home</span>
+						<span>Home</span>
 					</Link>
 
 					<SignedIn>
@@ -47,7 +66,7 @@ const LeftSidebar = () => {
 							)}
 						>
 							<MessageCircle className='mr-2 size-5' />
-							<span className='hidden md:inline'>Messages</span>
+							<span>Messages</span>
 						</Link>
 					</SignedIn>
 				</div>
@@ -58,7 +77,7 @@ const LeftSidebar = () => {
 				<div className='flex items-center justify-between mb-4'>
 					<div className='flex items-center text-white px-2'>
 						<Library className='size-5 mr-2' />
-						<span className='hidden md:inline'>Playlists</span>
+						<span>Playlists</span>
 					</div>
 				</div>
 
@@ -79,7 +98,7 @@ const LeftSidebar = () => {
 										className='size-12 rounded-md flex-shrink-0 object-cover'
 									/>
 
-									<div className='flex-1 min-w-0 hidden md:block'>
+									<div className='flex-1 min-w-0'>
 										<p className='font-medium truncate'>{album.title}</p>
 										<p className='text-sm text-zinc-400 truncate'>Album • {album.artist}</p>
 									</div>
