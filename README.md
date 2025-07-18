@@ -9,6 +9,32 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 > Coming Soon...
 
 ---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+![Home Page](./screenshots/HomePage.png)
+
+### 💬 Chat Page
+![Chat Page](./screenshots/ChatPage.png)
+![Chat Page 2](./screenshots/ChatPage2.png)
+
+### 💿 Album Page
+![Album Page](./screenshots/AlbumPage.png)
+
+### ⚙️ Admin Dashboard – Albums
+![Admin Albums Dashboard](./screenshots/AdminDashboardAlbums.png)
+
+### ⚙️ Admin Dashboard – Songs
+![Admin Songs Dashboard](./screenshots/AdminDashboardSongs.png)
+
+### ➕ Add New Albums
+![Add Albums](./screenshots/AddAlbums.png)
+
+### ➕ Add New Songs
+![Add Songs](./screenshots/AddSongs.png)
+
+
 ## ⚙️ Tech Stack
 
 - **Frontend**: React, Tailwind, Zustand, Clerk, Vite, ShadCN UI
