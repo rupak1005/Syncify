@@ -38,7 +38,7 @@ const ChatPage = () => {
   console.log({ messages });
 
   return (
-    <main className="h-full rounded-lg bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden">
+    <main className="bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen overflow-hidden">
       <Topbar />
 
       <div className="grid lg:grid-cols-[250px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-150px)] ">

@@ -26,7 +26,7 @@ const SearchPage = () => {
 		: songs;
 
 	return (
-		<main className='h-full rounded-lg bg-gradient-to-b from-zinc-800 to-zinc-900 overflow-hidden'>
+		<main className='bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen overflow-hidden'>
 			<Topbar />
 			<div className='p-4 sm:p-6'>
 				<Input
@@ -34,10 +34,10 @@ const SearchPage = () => {
 					placeholder='Search for songs or artists...'
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
-					className='w-full max-w-lg mx-auto mb-6 bg-zinc-700 border-transparent placeholder:text-zinc-400'
+					className='w-full max-w-lg mx-auto mb-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white border-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
 				/>
-				<ScrollArea className='h-[calc(100vh-250px)]'>
-					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4'>
+				<ScrollArea className='h-[calc(100vh-300px)] '>
+					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 pr-4'>
 						{isLoading && filteredSongs.length === 0 ? (
 							<p>Loading songs...</p>
 						) : (
@@ -60,7 +60,7 @@ const SongItem = ({ song }: { song: Song }) => {
 	return (
 		<div
 			onClick={handlePlay}
-			className='bg-zinc-800/40 p-2 rounded-md hover:bg-zinc-700/40 transition-all group flex items-center gap-3 sm:block sm:p-4 cursor-pointer'
+			className='bg-zinc-800/40 p-2 rounded-md hover:bg-zinc-700/40 transition-all group flex items-center gap-3 sm:block sm:p-4 cursor-pointer '
 		>
 			<div className='relative flex-shrink-0 h-16 w-16 sm:w-full sm:h-fit sm:aspect-square sm:mb-2 rounded-md overflow-hidden'>
 				<img

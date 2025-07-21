@@ -28,7 +28,7 @@ const FriendsActivity = () => {
 	};
 
 	return (
-		<div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
+		<div className='h-full bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  rounded-lg flex flex-col'>
 			<div className='p-4 flex justify-between items-center border-b border-zinc-800'>
 				<div className='flex items-center gap-2'>
 					<Users className='size-5 shrink-0' />
@@ -47,9 +47,9 @@ const FriendsActivity = () => {
 						return (
 							<div
 								key={friend._id}
-								className='cursor-pointer hover:bg-zinc-800/50 p-3 rounded-md transition-colors group'
+								className='cursor-pointer bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  p-3 rounded-md transition-colors group'
 							>
-								<div className='flex items-start gap-3'>
+								<div className='flex items-start gap-3 '>
 									<div className='relative'>
 										<Avatar className='size-10 border border-zinc-800'>
 											<AvatarImage src={friend.imageUrl} alt={friend.fullName} />

@@ -47,7 +47,7 @@ const AlbumPage = () => {
 				<div className='relative min-h-full'>
 					{/* bg gradient */}
 					<div
-						className='absolute inset-0 bg-gradient-to-b from-[#5038a0]/80 via-zinc-900/80 to-zinc-900 pointer-events-none'
+						className='absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen pointer-events-none'
 						aria-hidden='true'
 					/>
 

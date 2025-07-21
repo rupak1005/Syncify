@@ -72,7 +72,7 @@ export const PlaybackControls = () => {
 	};
 
 	return (
-		<footer className='h-28 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-3 py-2 sm:px-4 sm:py-0 fixed bottom-0 left-0 w-full z-40'>
+		<footer className='h-28 sm:h-24 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  border-t border-gray-900 px-3 py-2 sm:px-4 sm:py-0 fixed bottom-0 left-0 w-full z-40'>
 			{isListeningAlong && listenAlongHost && (
 				<div className='absolute -top-10 left-0 w-full bg-green-500 text-white text-center p-2 flex items-center justify-center gap-4'>
 					<Radio className='size-5' />
