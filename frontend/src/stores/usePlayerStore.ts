@@ -125,10 +125,10 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 	startListeningAlong: (host) => set({ isListeningAlong: true, listenAlongHost: host, listeners: new Set() }),
 	stopListeningAlong: () => set({ isListeningAlong: false, listenAlongHost: null, isPlaying: false }),
 	syncPlayerState: (state) => {
-		set({
+			set({
 			currentSong: state.song,
 			isPlaying: state.isPlaying,
-		});
+			});
 	},
 	addListener: (listenerId: string) =>
 		set((state) => ({ listeners: new Set(state.listeners).add(listenerId) })),
