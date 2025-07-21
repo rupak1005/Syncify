@@ -10,7 +10,7 @@ export default function NotFoundPage() {
 			<div className='text-center space-y-8 px-4'>
 				{/* Large animated musical note */}
 				<div className='flex justify-center animate-bounce'>
-					<Music2 className='h-24 w-24 text-emerald-500' />
+					<Music2 className='h-24 w-24 text-blue-500' />
 				</div>
 
 				{/* Error message */}
@@ -33,7 +33,7 @@ export default function NotFoundPage() {
 					</Button>
 					<Button
 						onClick={() => navigate("/")}
-						className='bg-emerald-500 hover:bg-emerald-600 text-white w-full sm:w-auto'
+						className='bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-auto'
 					>
 						<Home className='mr-2 h-4 w-4' />
 						Back to Home

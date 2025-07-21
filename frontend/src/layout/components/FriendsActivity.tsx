@@ -1,24 +1,38 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatStore } from "@/stores/useChatStore";
+import { usePlayerStore } from "@/stores/usePlayerStore";
 import { useUser } from "@clerk/clerk-react";
-import { HeadphonesIcon, Music, Users } from "lucide-react";
+import { HeadphonesIcon, Radio, Users } from "lucide-react";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const FriendsActivity = () => {
-	const { users, fetchUsers, onlineUsers, userActivities } = useChatStore();
+	const { users, fetchUsers, onlineUsers, userActivities, socket } = useChatStore();
 	const { user } = useUser();
+	const { startListeningAlong, isListeningAlong, listenAlongHost } = usePlayerStore();
 
 	useEffect(() => {
 		if (user) fetchUsers();
 	}, [fetchUsers, user]);
+
+	const handleListenAlong = (hostUser: any) => {
+		if (isListeningAlong && listenAlongHost?.id === hostUser.clerkId) {
+			toast.error("You are already listening to this user.");
+			return;
+		}
+
+		socket.emit("listen-along:start", { hostUserId: hostUser.clerkId });
+		startListeningAlong({ id: hostUser.clerkId, name: hostUser.fullName });
+		toast.success(`Started listening along with ${hostUser.fullName}`);
+	};
 
 	return (
 		<div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
 			<div className='p-4 flex justify-between items-center border-b border-zinc-800'>
 				<div className='flex items-center gap-2'>
 					<Users className='size-5 shrink-0' />
-					<h2 className='font-semibold'>What they're listening to</h2>
+					<h2 className='font-semibold'>Friends Activity</h2>
 				</div>
 			</div>
 
@@ -26,33 +40,41 @@ const FriendsActivity = () => {
 
 			<ScrollArea className='flex-1'>
 				<div className='p-4 space-y-4'>
-					{users.map((user) => {
-						const activity = userActivities.get(user.clerkId);
+					{users.map((friend) => {
+						const activity = userActivities.get(friend.clerkId);
 						const isPlaying = activity && activity !== "Idle";
 
 						return (
 							<div
-								key={user._id}
+								key={friend._id}
 								className='cursor-pointer hover:bg-zinc-800/50 p-3 rounded-md transition-colors group'
 							>
 								<div className='flex items-start gap-3'>
 									<div className='relative'>
 										<Avatar className='size-10 border border-zinc-800'>
-											<AvatarImage src={user.imageUrl} alt={user.fullName} />
-											<AvatarFallback>{user.fullName[0]}</AvatarFallback>
+											<AvatarImage src={friend.imageUrl} alt={friend.fullName} />
+											<AvatarFallback>{friend.fullName[0]}</AvatarFallback>
 										</Avatar>
 										<div
 											className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-zinc-900 
-												${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"}
+												${onlineUsers.has(friend.clerkId) ? "bg-blue-500" : "bg-zinc-500"}
 												`}
 											aria-hidden='true'
 										/>
 									</div>
 
 									<div className='flex-1 min-w-0'>
-										<div className='flex items-center gap-2'>
-											<span className='font-medium text-sm text-white'>{user.fullName}</span>
-											{isPlaying && <Music className='size-3.5 text-emerald-400 shrink-0' />}
+										<div className='flex items-center justify-between'>
+											<span className='font-medium text-sm text-white'>{friend.fullName}</span>
+											{isPlaying && (
+												<button
+													onClick={() => handleListenAlong(friend)}
+													className='opacity-0 group-hover:opacity-100 transition-opacity'
+													title={`Listen along with ${friend.fullName}`}
+												>
+													<Radio className='size-4 text-blue-400' />
+												</button>
+											)}
 										</div>
 
 										{isPlaying ? (

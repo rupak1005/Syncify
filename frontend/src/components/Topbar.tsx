@@ -16,9 +16,9 @@ const Topbar = () => {
       backdrop-blur-md z-10
     '
 		>
-			<div className="flex gap-2 items-center mx-auto">
-				<img src='/spotify.png' className={cn('size-8', location.pathname === '/' ? 'sm:inline hidden' : '')} alt='Spotify logo' />
-				Spotify
+			<div className="flex gap-2 items-center  text-xl mx-auto">
+				<img src='/logo.png' className={cn('size-8', location.pathname === '/' ? 'sm:inline hidden' : '')} alt='Spotify logo' />
+				Syncify
 			</div>
 			<div className='flex items-center gap-2'>
 				{isAdmin && (

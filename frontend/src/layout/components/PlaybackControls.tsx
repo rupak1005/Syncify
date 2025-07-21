@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { usePlayerStore } from "@/stores/usePlayerStore";
-import { Laptop2, ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1 } from "lucide-react";
+import { useChatStore } from "@/stores/useChatStore";
+import { Radio, X, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Volume1, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const formatTime = (seconds: number) => {
@@ -11,7 +12,18 @@ const formatTime = (seconds: number) => {
 };
 
 export const PlaybackControls = () => {
-	const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = usePlayerStore();
+	const {
+		currentSong,
+		isPlaying,
+		togglePlay,
+		playNext,
+		playPrevious,
+		isListeningAlong,
+		listenAlongHost,
+		stopListeningAlong,
+		listeners,
+	} = usePlayerStore();
+	const { socket } = useChatStore();
 
 	const [volume, setVolume] = useState(75);
 	const [currentTime, setCurrentTime] = useState(0);
@@ -20,7 +32,6 @@ export const PlaybackControls = () => {
 
 	useEffect(() => {
 		audioRef.current = document.querySelector("audio");
-
 		const audio = audioRef.current;
 		if (!audio) return;
 
@@ -31,9 +42,10 @@ export const PlaybackControls = () => {
 		audio.addEventListener("loadedmetadata", updateDuration);
 
 		const handleEnded = () => {
-			usePlayerStore.setState({ isPlaying: false });
+			if (!isListeningAlong) {
+				usePlayerStore.setState({ isPlaying: false });
+			}
 		};
-
 		audio.addEventListener("ended", handleEnded);
 
 		return () => {
@@ -41,16 +53,41 @@ export const PlaybackControls = () => {
 			audio.removeEventListener("loadedmetadata", updateDuration);
 			audio.removeEventListener("ended", handleEnded);
 		};
-	}, [currentSong]);
+	}, [currentSong, isListeningAlong]);
 
 	const handleSeek = (value: number[]) => {
-		if (audioRef.current) {
+		if (audioRef.current && !isListeningAlong) {
 			audioRef.current.currentTime = value[0];
+		}
+	};
+
+	const handleStopListening = () => {
+		if (listenAlongHost) {
+			socket.emit("listen-along:stop", { hostUserId: listenAlongHost.id });
+			stopListeningAlong();
+			if (audioRef.current) {
+				audioRef.current.pause();
+			}
 		}
 	};
 
 	return (
 		<footer className='h-28 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-3 py-2 sm:px-4 sm:py-0 fixed bottom-0 left-0 w-full z-40'>
+			{isListeningAlong && listenAlongHost && (
+				<div className='absolute -top-10 left-0 w-full bg-blue-500 text-white text-center p-2 flex items-center justify-center gap-4'>
+					<Radio className='size-5' />
+					<span>Listening along with {listenAlongHost.name}</span>
+					<button onClick={handleStopListening} className='font-bold' title='Stop listening along'>
+						<X className='size-5' />
+					</button>
+				</div>
+			)}
+			{!isListeningAlong && listeners.size > 0 && (
+				<div className='absolute -top-10 left-0 w-full bg-blue-500 text-white text-center p-2 flex items-center justify-center gap-4'>
+					<Users className='size-5' />
+					<span>{listeners.size} {listeners.size === 1 ? 'person' : 'people'} listening along</span>
+				</div>
+			)}
 			<div className='flex flex-col sm:flex-row justify-between items-center h-full max-w-[1800px] mx-auto'>
 				{/* Mobile: song info and controls in a row */}
 				<div className='flex sm:hidden items-center gap-3 w-full'>
@@ -75,15 +112,15 @@ export const PlaybackControls = () => {
 							variant='ghost'
 							className='hover:text-white text-zinc-400'
 							onClick={playPrevious}
-							disabled={!currentSong}
+							disabled={!currentSong || isListeningAlong}
 						>
 							<SkipBack className='h-5 w-5' />
 						</Button>
 						<Button
 							size='icon'
-							className='bg-white hover:bg-white/80 text-black rounded-full h-10 w-10'
+							className='bg-blue-500 hover:bg-blue-400 text-black rounded-full h-10 w-10'
 							onClick={togglePlay}
-							disabled={!currentSong}
+							disabled={!currentSong || isListeningAlong}
 						>
 							{isPlaying ? <Pause className='h-6 w-6' /> : <Play className='h-6 w-6' />}
 						</Button>
@@ -92,7 +129,7 @@ export const PlaybackControls = () => {
 							variant='ghost'
 							className='hover:text-white text-zinc-400'
 							onClick={playNext}
-							disabled={!currentSong}
+							disabled={!currentSong || isListeningAlong}
 						>
 							<SkipForward className='h-5 w-5' />
 						</Button>
@@ -108,134 +145,114 @@ export const PlaybackControls = () => {
 						step={1}
 						className='w-full hover:cursor-grab active:cursor-grabbing'
 						onValueChange={handleSeek}
+						disabled={isListeningAlong}
 					/>
 					<div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
-						<Volume1 className='h-4 w-4' />
-					</Button>
-					<Slider
-						value={[volume]}
-						max={100}
-						step={1}
-						className='w-20 hover:cursor-grab active:cursor-grabbing'
-						onValueChange={(value) => {
-							setVolume(value[0]);
-							if (audioRef.current) {
-								audioRef.current.volume = value[0] / 100;
-							}
-						}}
-					/>
 				</div>
 
 				{/* Desktop: original controls */}
 				<div className='hidden sm:flex justify-between items-center h-full w-full '>
 					{/* currently playing song */}
 					<div className='flex items-center gap-4 min-w-[180px] w-[30%]'>
-					{currentSong && (
-						<>
-							<img
-								src={currentSong.imageUrl}
-								alt={currentSong.title}
-								className='w-14 h-14 object-cover rounded-md'
-							/>
-							<div className='flex-1 min-w-0'>
-								<div className='font-medium truncate hover:underline cursor-pointer'>
-									{currentSong.title}
+						{currentSong && (
+							<>
+								<img
+									src={currentSong.imageUrl}
+									alt={currentSong.title}
+									className='w-14 h-14 object-cover rounded-md'
+								/>
+								<div className='flex-1 min-w-0'>
+									<div className='font-medium truncate hover:underline cursor-pointer'>
+										{currentSong.title}
+									</div>
+									<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
+										{currentSong.artist}
+									</div>
 								</div>
-								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
-									{currentSong.artist}
-								</div>
-							</div>
-						</>
-					)}
-				</div>
+							</>
+						)}
+					</div>
 
-				{/* player controls*/}
+					{/* player controls*/}
 					<div className='flex flex-col items-center gap-2 flex-1 max-w-full sm:max-w-[45%] '>
-					<div className='flex items-center gap-4 sm:gap-6'>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hidden sm:inline-flex hover:text-white text-zinc-400'
-						>
-							<Shuffle className='h-4 w-4' />
-						</Button>
+						<div className='flex items-center gap-4 sm:gap-6'>
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hidden sm:inline-flex hover:text-white text-zinc-400'
+								disabled={isListeningAlong}
+							>
+								<Shuffle className='h-4 w-4' />
+							</Button>
 
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hover:text-white text-zinc-400'
-							onClick={playPrevious}
-							disabled={!currentSong}
-						>
-							<SkipBack className='h-4 w-4' />
-						</Button>
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hover:text-white text-zinc-400'
+								onClick={playPrevious}
+								disabled={!currentSong || isListeningAlong}
+							>
+								<SkipBack className='h-4 w-4' />
+							</Button>
 
-						<Button
-							size='icon'
-							className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
-							onClick={togglePlay}
-							disabled={!currentSong}
-						>
-							{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
-						</Button>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hover:text-white text-zinc-400'
-							onClick={playNext}
-							disabled={!currentSong}
-						>
-							<SkipForward className='h-4 w-4' />
-						</Button>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hidden sm:inline-flex hover:text-white text-zinc-400'
-						>
-							<Repeat className='h-4 w-4' />
-						</Button>
+							<Button
+								size='icon'
+								className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
+								onClick={togglePlay}
+								disabled={!currentSong || isListeningAlong}
+							>
+								{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
+							</Button>
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hover:text-white text-zinc-400'
+								onClick={playNext}
+								disabled={!currentSong || isListeningAlong}
+							>
+								<SkipForward className='h-4 w-4' />
+							</Button>
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hidden sm:inline-flex hover:text-white text-zinc-400'
+								disabled={isListeningAlong}
+							>
+								<Repeat className='h-4 w-4' />
+							</Button>
+						</div>
+
+						<div className='hidden sm:flex items-center gap-2 w-full'>
+							<div className='text-xs text-zinc-400'>{formatTime(currentTime)}</div>
+							<Slider
+								value={[currentTime]}
+								max={duration || 100}
+								step={1}
+								className='w-full hover:cursor-grab active:cursor-grabbing'
+								onValueChange={handleSeek}
+								disabled={isListeningAlong}
+							/>
+							<div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
+						</div>
 					</div>
-
-					<div className='hidden sm:flex items-center gap-2 w-full'>
-						<div className='text-xs text-zinc-400'>{formatTime(currentTime)}</div>
-						<Slider
-							value={[currentTime]}
-							max={duration || 100}
-							step={1}
-							className='w-full hover:cursor-grab active:cursor-grabbing'
-							onValueChange={handleSeek}
-						/>
-						<div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
-					</div>
-				</div>
-				{/* volume controls */}
-				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
-						<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400 hidden  md:inline-flex'>
-						<Mic2 className='h-4 w-4' />
-					</Button>
-						<Button size='icon' variant='ghost' className=' hidden  md:inline-flex hover:text-white text-zinc-400'>
-						<ListMusic className='h-4 w-4' />
-					</Button>
-						<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400 hidden  md:inline-flex'>
-						<Laptop2 className='h-4 w-4' />
-					</Button>
-					<div className='flex items-center gap-2'>
-						<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
-							<Volume1 className='h-4 w-4' />
-						</Button>
-						<Slider
-							value={[volume]}
-							max={100}
-							step={1}
-							className='w-24 hover:cursor-grab active:cursor-grabbing'
-							onValueChange={(value) => {
-								setVolume(value[0]);
-								if (audioRef.current) {
-									audioRef.current.volume = value[0] / 100;
-								}
-							}}
-						/>
+					{/* volume controls */}
+					<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
+						<div className='flex items-center gap-2'>
+							<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+								<Volume1 className='h-4 w-4' />
+							</Button>
+							<Slider
+								value={[volume]}
+								max={100}
+								step={1}
+								className='w-24 hover:cursor-grab active:cursor-grabbing'
+								onValueChange={(value) => {
+									setVolume(value[0]);
+									if (audioRef.current) {
+										audioRef.current.volume = value[0] / 100;
+									}
+								}}
+							/>
 						</div>
 					</div>
 				</div>
