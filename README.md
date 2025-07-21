@@ -1,4 +1,4 @@
-# 🎧 AdvanceSpotify - Full Stack Spotify Clone
+# 🎧 Syncify - Full Stack Spotify Clone
 
 A real-time, full-stack Spotify clone with chat, social activity, playback, admin dashboard, and music management features — built with **React**, **Tailwind CSS**, **ShadCN UI**, **MongoDB**, **Express**, and **Socket.io**.
 
@@ -13,27 +13,27 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](./screenshots/HomePage.png)
+Home Page
 
 ### 💬 Chat Page
-![Chat Page](./screenshots/ChatPage.png)
-![Chat Page 2](./screenshots/ChatPage2.png)
+Chat Page Chat Page 2
 
 ### 💿 Album Page
-![Album Page](./screenshots/AlbumPage.png)
+Album Page
 
 ### ⚙️ Admin Dashboard – Albums
-![Admin Albums Dashboard](./screenshots/AdminDashboardAlbums.png)
+Admin Albums Dashboard
 
 ### ⚙️ Admin Dashboard – Songs
-![Admin Songs Dashboard](./screenshots/AdminDashboardSongs.png)
+Admin Songs Dashboard
 
 ### ➕ Add New Albums
-![Add Albums](./screenshots/AddAlbums.png)
+Add Albums
 
 ### ➕ Add New Songs
-![Add Songs](./screenshots/AddSongs.png)
+Add Songs
 
+---
 
 ## ⚙️ Tech Stack
 
@@ -42,7 +42,7 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 - **Real-time**: Socket.io
 - **Auth**: Clerk
 - **Database**: MongoDB Atlas
-- **Deployment**: Vercel + Render (suggested)
+- **Deployment**: Render (recommended), Vercel (optional for frontend)
 - **State**: Zustand
 
 ---
@@ -55,7 +55,8 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 - Real-time broadcast of:
   - User connect/disconnect events
   - Chat messages
-  - Music playback actions (`play`, `pause`, `next`, etc.)
+  - Music playback actions (play, pause, next, etc.)
+  - **Listen Along**: Sync music playback in real-time with friends
 - Real-time activity feed on the homepage via WebSockets
 
 ---
@@ -63,8 +64,9 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 ### 🔐 Authentication & User Management
 
 - Auth handled with **Clerk**: supports Google sign-in and user profile management
-- `AuthProvider` sets Clerk JWT in Axios headers for secure backend communication
+- Clerk JWT is set in Axios headers for secure backend communication
 - Protected routes restrict access to authenticated users only
+- Admin features are protected and only visible to admin users
 
 ---
 
@@ -81,6 +83,7 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 - Centralized music player with:
   - Play, pause, next, previous
   - Reusable PlayButton component
+  - **Listen Along**: Join a friend's session and sync playback
 - Volume slider synced to player store & HTML audio element
 
 ---
@@ -98,7 +101,8 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 ### 🖼️ Frontend Development
 
 - Built with **React**, **Tailwind CSS**, and **ShadCN UI**
-- Responsive 3-column layout (left sidebar, main content, right sidebar)
+- Responsive layout for mobile, tablet, and desktop
+- Collapsible sidebar and mobile-friendly controls
 - Route-based navigation with **React Router** and a 404 fallback page
 
 ---
@@ -145,79 +149,69 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 ### 🗑️ Production & Maintenance
 
 - **Node Cron Jobs** to clean up temporary files
-- Static file serving of frontend from Express in production
 - Handles CORS & same-origin communication
 - Supports environment-based API and WebSocket URLs
+- Render deployment with Node 20.x enforced via `.nvmrc`
 
 ---
 
 ## 📁 Folder Structure
+
 ```
 AdvanceSpotify/
 
-
-├──backend/
-├── config
-│   ├── database.js
-│   ├── server.js
-│   └── env.js
-├── models
-│   ├── User.js
-│   ├── Song.js
-│   └── Album.js
-├── controllers
-│   ├── userController.js
-│   ├── songController.js
-│   └── albumController.js
-├── routes
-│   ├── userRoutes.js
-│   ├── songRoutes.js
-│   └── albumRoutes.js
-├── services
-│   ├── userService.js
-│   ├── songService.js
-│   └── albumService.js
-├── utils
-│   ├── auth.js
-│   ├── errors.js
+├── backend/
+│   ├── package.json
+│   ├── .nvmrc
+│   ├── .npmrc
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── database.ts
+│   │   │   └── ...
+│   │   ├── models/
+│   │   │   ├── User.ts
+│   │   │   ├── Song.ts
+│   │   │   └── Album.ts
+│   │   ├── controllers/
+│   │   │   ├── userController.ts
+│   │   │   ├── songController.ts
+│   │   │   └── albumController.ts
+│   │   ├── routes/
+│   │   │   ├── user.route.ts
+│   │   │   ├── song.route.ts
+│   │   │   ├── album.route.ts
+│   │   │   └── admin.route.ts
+│   │   ├── services/
+│   │   │   ├── userService.ts
+│   │   │   ├── songService.ts
+│   │   │   └── albumService.ts
+│   │   ├── utils/
+│   │   │   ├── auth.ts
+│   │   │   ├── errors.ts
+│   │   │   └── ...
+│   │   ├── lib/
+│   │   │   └── socket.js
+│   │   └── index.ts
 │   └── ...
-├── index.js
-└── package.json
-
-
-|──frontend/
-├── public
-│   └── index.html
-├── src
-│   ├── components
-│   │   ├── Header.js
-│   │   ├── Footer.js
-│   │   └── Layout.js
-│   ├── containers
-│   │   ├── App.js
-│   │   ├── Home.js
-│   │   ├── Login.js
-│   │   └── Register.js
-│   ├── services
-│   │   ├── api.js
-│   │   └── auth.js
-│   ├── utils
-│   │   ├── constants.js
-│   │   ├── helpers.js
-│   │   └── store.js
-│   ├── styles
-│   │   ├── global.css
-│   │   └── index.css
+├── frontend/
+│   ├── package.json
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── components/
+│   │   ├── layout/
+│   │   ├── pages/
+│   │   ├── stores/
+│   │   ├── styles/
+│   │   ├── App.tsx
+│   │   └── main.tsx
 │   ├── tailwind.config.js
-│   └── vite.config.js
-├── package.json
+│   ├── vite.config.ts
+│   └── ...
 └── README.md
 ```
 
-
 ---
-
-
 
 ## ⚙️ Setup and Installation
 
@@ -231,7 +225,9 @@ Follow the steps below to get this project running locally on your machine.
 git clone https://github.com/rupak1005/AdvanceSpotify.git
 cd AdvanceSpotify/
 ```
+
 ### 📦 2. Install Frontend Dependencies
+
 ```bash
 cd frontend
 npm install
@@ -240,6 +236,7 @@ yarn install
 ```
 
 ### 📦 3. Install Backend Dependencies
+
 ```bash
 cd ../backend
 npm install
@@ -247,75 +244,78 @@ npm install
 yarn install
 ```
 
-
 ### 🔐 4. Configure Environment Variables
 
-Create a .env file in the backend/ directory with the following contents:
-```bash
+Create a `.env` file in the `backend/` directory with the following contents:
+
+```env
 PORT=
 MONGODB_URI=
-
 ADMIN_EMAIL=
-
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
-
 NODE_ENV=
-
 CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
-Create a .env file in the frontend/ directory with the following contents:
-```bash
+
+Create a `.env` file in the `frontend/` directory with the following contents:
+
+```env
 VITE_CLERK_PUBLISHABLE_KEY=
 ```
-🔒 Make sure not to commit .env to version control.
 
-
-
+🔒 **Make sure not to commit .env to version control.**
 
 ### ▶️ 5. Run the Backend Server
+
 ```bash
 cd backend
 npm start
 # or
 yarn start
 ```
+
 ### 💻 6. Run the Frontend Development Server
+
 ```bash
 cd frontend
-npm start
+npm run dev
 # or
-yarn start
+yarn dev
 ```
+
 ### 🌐 7. Access the App
 
 Open your browser and go to:
-```bash
+
+```
 http://localhost:3000
+```
 
 The frontend should be running on port 3000, and will communicate with the backend running on port 5000 (or as defined in your .env).
-```
-### 🧪 Future Features
 
-    ⏳ Voice messages
+---
 
-    ⏳ Song reactions
+## 🧪 Future Features
 
-    ⏳ Realtime search
+- ⏳ Voice messages
+- ⏳ Song reactions
+- ⏳ Realtime search
+- ⏳ Chat read receipts
+- ⏳ Playlists & libraries
+- ⏳ Notifications
+- ⏳ Theme toggle (dark/light)
 
-    ⏳ Chat read receipts
+---
 
-    ⏳ Playlists & libraries
-
-    ⏳ Notifications
-
-    ⏳ Theme toggle (dark/light)
- 
-### 👨‍💻 Author
+## 👨‍💻 Author
 
 Rupak Saini
-### 🛡️ License
+
+---
+
+## 🛡️ License
 
 This project is licensed under the MIT License.
