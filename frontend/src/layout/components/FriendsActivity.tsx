@@ -57,7 +57,7 @@ const FriendsActivity = () => {
 										</Avatar>
 										<div
 											className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-zinc-900 
-												${onlineUsers.has(friend.clerkId) ? "bg-blue-500" : "bg-zinc-500"}
+												${onlineUsers.has(friend.clerkId) ? "bg-emerald-500" : "bg-zinc-500"}
 												`}
 											aria-hidden='true'
 										/>
