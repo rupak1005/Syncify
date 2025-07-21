@@ -13,25 +13,34 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-Home Page
+<img width="1895" height="988" alt="HOMEPAGE" src="https://github.com/user-attachments/assets/6cacaa99-6843-4f6f-bb41-31899358f4d9" />
+
 
 ### 💬 Chat Page
-Chat Page Chat Page 2
+
+<img width="1892" height="977" alt="CHATPAGE" src="https://github.com/user-attachments/assets/476fef46-e325-4bf0-9644-eca661c9d50a" /><img width="1896" height="971" alt="CHATPAGE2" src="https://github.com/user-attachments/assets/a2bb2810-e5f5-4d90-ae74-f9f1fcf7fed1" />
+
 
 ### 💿 Album Page
-Album Page
+<img width="1901" height="984" alt="ALBUM" src="https://github.com/user-attachments/assets/ea1cf930-1537-4bf3-9fc5-8ee85b5f1688" />
+
 
 ### ⚙️ Admin Dashboard – Albums
-Admin Albums Dashboard
+<img width="1897" height="981" alt="ADMINPAGE2" src="https://github.com/user-attachments/assets/1c14e08a-ad99-42ec-bad7-203ac5edc581" />
+
+
 
 ### ⚙️ Admin Dashboard – Songs
-Admin Songs Dashboard
+<img width="1896" height="987" alt="ADMINPAGE1" src="https://github.com/user-attachments/assets/1ad42347-bae3-4b59-a305-dab354f24b09" />
+
 
 ### ➕ Add New Albums
-Add Albums
+<img width="1898" height="989" alt="ADDSONGS" src="https://github.com/user-attachments/assets/2adf2241-0da1-4710-8ea1-5179037ca461" />
+
 
 ### ➕ Add New Songs
-Add Songs
+<img width="1895" height="981" alt="ADDALBUM" src="https://github.com/user-attachments/assets/d3a7683d-9fd8-40d8-a952-9690a22dd85b" />
+
 
 ---
 
