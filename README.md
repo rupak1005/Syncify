@@ -8,7 +8,9 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 
 > https://advancespotify.onrender.com/
 
----📸 Screenshots
+---
+
+## 📸 Screenshots
 
 <p align="center">
 A showcase of Syncify's user interface, from the main dashboard to the admin panels.
@@ -19,7 +21,7 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 <tr>
 <td align="center" colspan="2">
 <h3>🏠 Home Page</h3>
-  <img width="1740" height="979" alt="HOMEPAGE" src="https://github.com/user-attachments/assets/8fb2fedb-35b4-4eeb-96e2-3eea47d88adc" alt="Home Page" width="90%"/>
+<img src="https://github.com/user-attachments/assets/8fb2fedb-35b4-4eeb-96e2-3eea47d88adc" alt="Home Page" width="90%"/>
 </td>
 </tr>
 
@@ -28,11 +30,11 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 <tr>
 <td align="center">
 <h3>🔍 Search Page</h3>
-<img width="1740" height="983" alt="SEARCHPAGE" src="https://github.com/user-attachments/assets/95dcfca7-26b9-4cb0-83ba-0a35435f4493" alt="Search Page" width="450"/>
+<img src="https://github.com/user-attachments/assets/95dcfca7-26b9-4cb0-83ba-0a35435f4493" alt="Search Page" width="450"/>
 </td>
 <td align="center">
 <h3>💿 Album Page</h3>
-  <img width="1735" height="978" alt="ALBUM" src="https://github.com/user-attachments/assets/bffa07d7-0fc5-4113-ae68-52eb51e942c2" alt="Album Page" width="450"/>
+<img src="https://github.com/user-attachments/assets/bffa07d7-0fc5-4113-ae68-52eb51e942c2" alt="Album Page" width="450"/>
 </td>
 </tr>
 
@@ -41,23 +43,15 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 <tr>
 <td align="center" colspan="2">
 <h3>💬 Chat System</h3>
-<img width="1739" height="978" alt="CHATPAGE" src="https://github.com/user-attachments/assets/dd1615b3-0770-4d9f-a85f-fbdd334fb01d" alt="Chat Page" width="90%"/>
+<img src="https://github.com/user-attachments/assets/dd1615b3-0770-4d9f-a85f-fbdd334fb01d" alt="Chat Page" width="90%"/>
 </td>
-
-
-  
 </tr>
 
 <!-- Row 4: Admin Dashboard Header -->
 
 <tr>
-<td align="center">
-<h3>Admin Dashboard </h3>
-<img width="1896" height="987" alt="ADMINPAGE1" src="https://github.com/user-attachments/assets/27ae17f4-0c70-43cd-9637-236289e43ca5" width="450"/>
-</td>
-<td align="center">
-<h3>Admin Dashboard </h3>
- <img width="1897" height="981" alt="ADMINPAGE2" src="https://github.com/user-attachments/assets/3b626da4-b449-49ee-afe3-370718357020"  width="450"/>
+<td align="center" colspan="2">
+<h3>⚙️ Admin Dashboard</h3>
 </td>
 </tr>
 
@@ -66,14 +60,28 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 <tr>
 <td align="center">
 <h4>Song Management</h4>
-<img width="1898" height="989" alt="ADDSONGS" src="https://github.com/user-attachments/assets/7e9ae22c-d3c3-4c56-94ac-07b271298ff2" width="450"/>
+<img src="https://github.com/user-attachments/assets/27ae17f4-0c70-43cd-9637-236289e43ca5" alt="Admin Songs Dashboard" width="450"/>
 </td>
 <td align="center">
 <h4>Album Management</h4>
-<img width="1895" height="981" alt="ADDALBUM" src="https://github.com/user-attachments/assets/ef783d79-f619-4148-b347-ac29b040a3cc" alt="Admin Albums Dashboard" width="450"/>
+<img src="https://github.com/user-attachments/assets/3b626da4-b449-49ee-afe3-370718357020" alt="Admin Albums Dashboard" width="450"/>
 </td>
 </tr>
 
+<!-- Row 6: Content Creation -->
+
+<tr>
+<td align="center">
+  <h4>Add New Song</h4>
+  <img src="https://github.com/user-attachments/assets/7e9ae22c-d3c3-4c56-94ac-07b271298ff2" alt="Add New Song Modal" width="450"/>
+</td>
+<td align="center">
+  <h4>Add New Album</h4>
+  <img src="https://github.com/user-attachments/assets/ef783d79-f619-4148-b347-ac29b040a3cc" alt="Add New Album Modal" width="450"/>
+</td>
+
+</tr>
+</table>
 
 ---
 
