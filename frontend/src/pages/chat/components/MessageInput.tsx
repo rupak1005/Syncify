@@ -27,8 +27,8 @@ const MessageInput = () => {
 					onKeyDown={(e) => e.key === "Enter" && handleSend()}
 				/>
 
-				<Button size={"icon"} onClick={handleSend} disabled={!newMessage.trim()}>
-					<Send className='size-4' />
+				<Button className="bg-blue-500" size={"icon"} onClick={handleSend} disabled={!newMessage.trim()}>
+					<Send className='size-4 ' />
 				</Button>
 			</div>
 		</div>
