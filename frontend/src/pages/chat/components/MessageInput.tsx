@@ -23,7 +23,7 @@ const MessageInput = () => {
 					placeholder='Type a message'
 					value={newMessage}
 					onChange={(e) => setNewMessage(e.target.value)}
-					className='bg-zinc-800 p-4  border-none'
+					className='bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  p-4  border-none'
 					onKeyDown={(e) => e.key === "Enter" && handleSend()}
 				/>
 
