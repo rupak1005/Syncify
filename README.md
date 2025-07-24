@@ -109,6 +109,11 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
   - **Listen Along**: Sync music playback in real-time with friends
 - Real-time activity feed on the homepage via WebSockets
 
+### ✨ Features
+
+- **Full Screen Player Mode**: Enjoy a distraction-free, immersive music experience with a dedicated full screen player for both mobile and desktop.
+- **Liquid Glass (Glassmorphism) UI**: Modern glass-like transparency and blur effects applied to the player bar, sidebars, topbar, and all song cards for a sleek, premium look.
+
 ---
 
 ### 🔐 Authentication & User Management
@@ -193,6 +198,7 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
   - Tailwind: Layout, spacing, animations
 - Featured sections: Trending, Made For You, Recent
 - UserList with avatars and real-time status
+- Modern glassmorphism (liquid glass) effect: Consistent semi-transparent, blurred backgrounds on player bar, sidebars, topbar, and song cards for a visually stunning interface.
 
 ---
 
