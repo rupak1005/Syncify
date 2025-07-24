@@ -23,8 +23,7 @@ const AdminPage = () => {
 
 	return (
 		<div
-			className='min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900
-   to-black text-zinc-100 p-8'
+			className='min-h-screen bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-zinc-100 p-8 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'
 		>
 			<Header />
 
