@@ -9,65 +9,77 @@ A real-time, full-stack Spotify clone with chat, social activity, playback, admi
 > https://advancespotify.onrender.com/
 
 ---
-📸 Screenshots
+
+## 📸 Screenshots
 
 <p align="center">
 A showcase of Syncify's user interface, from the main dashboard to the admin panels.
 </p>
 
-<table align="center">
+<table align="center" border="0" cellpadding="10" cellspacing="0">
+<!-- Row 1: Home Page (Full Width) -->
+<tr>
+<td align="center" colspan="2">
+<h3>🏠 Home Page</h3>
+<img src="https://github.com/user-attachments/assets/8fb2fedb-35b4-4eeb-96e2-3eea47d88adc" alt="Home Page" width="90%"/>
+</td>
+</tr>
+
+<!-- Row 2: Search and Album Pages -->
+
 <tr>
 <td align="center">
-<h3>🏠 Home Page</h3>
-<img src="https://github.com/user-attachments/assets/6cacaa99-6843-4f6f-bb41-31899358f4d9" alt="Home Page" width="400"/>
+<h3>🔍 Search Page</h3>
+<img src="https://github.com/user-attachments/assets/95dcfca7-26b9-4cb0-83ba-0a35435f4493" alt="Search Page" width="450"/>
 </td>
 <td align="center">
 <h3>💿 Album Page</h3>
-<img src="https://github.com/user-attachments/assets/ea1cf930-1537-4bf3-9fc5-8ee85b5f1688" alt="Album Page" width="400"/>
+<img src="https://github.com/user-attachments/assets/bffa07d7-0fc5-4113-ae68-52eb51e942c2" alt="Album Page" width="450"/>
 </td>
 </tr>
+
+<!-- Row 3: Chat Page (Full Width) -->
+
 <tr>
 <td align="center" colspan="2">
 <h3>💬 Chat System</h3>
+<img src="https://github.com/user-attachments/assets/dd1615b3-0770-4d9f-a85f-fbdd334fb01d" alt="Chat Page" width="90%"/>
 </td>
 </tr>
-<tr>
-<td align="center">
-<img src="https://github.com/user-attachments/assets/476fef46-e325-4bf0-9644-eca661c9d50a" alt="Chat Page" width="400"/>
-</td>
-<td align="center">
-<img src="https://github.com/user-attachments/assets/a2bb2810-e5f5-4d90-ae74-f9f1fcf7fed1" alt="Chat Page 2" width="400"/>
-</td>
-</tr>
+
+<!-- Row 4: Admin Dashboard Header -->
+
 <tr>
 <td align="center" colspan="2">
 <h3>⚙️ Admin Dashboard</h3>
 </td>
 </tr>
+
+<!-- Row 5: Admin Management Pages -->
+
 <tr>
-<td align="center">
-<h4>Album Management</h4>
-<img src="https://github.com/user-attachments/assets/1c14e08a-ad99-42ec-bad7-203ac5edc581" alt="Admin Albums Dashboard" width="400"/>
-</td>
 <td align="center">
 <h4>Song Management</h4>
-<img src="https://github.com/user-attachments/assets/1ad42347-bae3-4b59-a305-dab354f24b09" alt="Admin Songs Dashboard" width="400"/>
-</td>
-</tr>
-<tr>
-<td align="center" colspan="2">
-<h3>➕ Content Creation</h3>
-</td>
-</tr>
-<tr>
-<td align="center">
-<h4>Add New Albums</h4>
-<img src="https://github.com/user-attachments/assets/2adf2241-0da1-4710-8ea1-5179037ca461" alt="Add New Albums" width="400"/>
+<img src="https://github.com/user-attachments/assets/27ae17f4-0c70-43cd-9637-236289e43ca5" alt="Admin Songs Dashboard" width="450"/>
 </td>
 <td align="center">
-<h4>Add New Songs</h4>
-<img src="https://github.com/user-attachments/assets/d3a7683d-9fd8-40d8-a952-9690a22dd85b" alt="Add New Songs" width="400"/>
+<h4>Album Management</h4>
+<img src="https://github.com/user-attachments/assets/3b626da4-b449-49ee-afe3-370718357020" alt="Admin Albums Dashboard" width="450"/>
 </td>
+</tr>
+
+<!-- Row 6: Content Creation -->
+
+<tr>
+<td align="center">
+  <h4>Add New Song</h4>
+  <img src="https://github.com/user-attachments/assets/7e9ae22c-d3c3-4c56-94ac-07b271298ff2" alt="Add New Song Modal" width="450"/>
+</td>
+<td align="center">
+  <h4>Add New Album</h4>
+  <img src="https://github.com/user-attachments/assets/ef783d79-f619-4148-b347-ac29b040a3cc" alt="Add New Album Modal" width="450"/>
+</td>
+
 </tr>
 </table>
 
