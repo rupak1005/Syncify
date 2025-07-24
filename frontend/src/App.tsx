@@ -9,10 +9,13 @@ import AdminPage from "./pages/admin/AdminPage";
 import SearchPage from "./pages/search/SearchPage";
 import { Toaster } from "react-hot-toast";
 import NotFoundPage from "./pages/404/NotFoundPage";
+import FullScreenPlayerPage from "./pages/player/FullScreenPlayerPage";
+import AudioPlayer from "./layout/components/AudioPlayer";
 
 function App() {
 	return (
 		<>
+			<AudioPlayer />
 			<Routes>
 				<Route
 					path='/sso-callback'
@@ -28,6 +31,9 @@ function App() {
 					<Route path='/albums/:albumId' element={<AlbumPage />} />
 					<Route path='*' element={<NotFoundPage />} />
 				</Route>
+
+        {/* Full screen player route (no MainLayout) */}
+        <Route path='/player/fullscreen' element={<FullScreenPlayerPage />} />
 			</Routes>
 			<Toaster />
 		</>

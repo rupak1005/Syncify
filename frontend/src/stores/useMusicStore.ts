@@ -149,6 +149,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 		}
 	},
 
+	
 	fetchTrendingSongs: async () => {
 		set({ isLoading: true, error: null });
 		try {

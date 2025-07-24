@@ -28,7 +28,7 @@ const FriendsActivity = () => {
 	};
 
 	return (
-		<div className='h-full bg-black  rounded-lg flex flex-col'>
+		<div className='h-full bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg flex flex-col backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'>
 			<div className='p-4 flex justify-between items-center border-b border-zinc-800'>
 				<div className='flex items-center gap-2'>
 					<Users className='size-5 shrink-0' />

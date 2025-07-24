@@ -91,6 +91,38 @@ export const initializeSocket = (server) => {
 			}
 		});
 
+		socket.on("message:react", async ({ messageId, emoji, userId }) => {
+			try {
+				const message = await Message.findById(messageId);
+				if (!message) return;
+
+				// Toggle reaction: add if not present, remove if already present
+				const existing = message.reactions.find(
+					(r) => r.emoji === emoji && r.userId === userId
+				);
+				if (existing) {
+					message.reactions = message.reactions.filter(
+						(r) => !(r.emoji === emoji && r.userId === userId)
+					);
+				} else {
+					message.reactions.push({ emoji, userId });
+				}
+				await message.save();
+
+				// Notify both sender and receiver
+				const receiverSocketId = userSockets.get(message.receiverId);
+				const senderSocketId = userSockets.get(message.senderId);
+				if (receiverSocketId) {
+					io.to(receiverSocketId).emit("message:reaction-updated", message);
+				}
+				if (senderSocketId && senderSocketId !== receiverSocketId) {
+					io.to(senderSocketId).emit("message:reaction-updated", message);
+				}
+			} catch (error) {
+				socket.emit("message:reaction-error", error.message);
+			}
+		});
+
 		// --- Handle Disconnects ---
 		socket.on("disconnect", () => {
 			if (socket.userId) {

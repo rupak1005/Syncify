@@ -9,6 +9,9 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import MessageInput from "./components/MessageInput";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { cn } from "@/lib/utils";
+import Picker from '@emoji-mart/react';
+import data from '@emoji-mart/data';
+import  { useState } from 'react';
 
 const formatTime = (date: string) => {
   return new Date(date).toLocaleTimeString("en-US", {
@@ -22,6 +25,9 @@ const ChatPage = () => {
   const { user } = useUser();
   const { messages, selectedUser, fetchUsers, fetchMessages } = useChatStore();
   const { isListeningAlong, listenAlongHost, listeners } = usePlayerStore();
+  const { socket } = useChatStore();
+  const [showPickerFor, setShowPickerFor] = useState<string | null>(null);
+  const [hoveredMessageId, setHoveredMessageId] = useState<string | null>(null);
 
   const isBannerVisible =
     (isListeningAlong && listenAlongHost) ||
@@ -59,6 +65,8 @@ const ChatPage = () => {
                       className={`flex items-start gap-3 ${
                         message.senderId === user?.id ? "flex-row-reverse" : ""
                       }`}
+                      onMouseEnter={() => setHoveredMessageId(message._id)}
+                      onMouseLeave={() => setHoveredMessageId(null)}
                     >
                       <Avatar className="size-8">
                         <AvatarImage
@@ -74,11 +82,54 @@ const ChatPage = () => {
                         className={`rounded-lg p-3 max-w-[70%]
 													${message.senderId === user?.id ? "bg-blue-500" : "bg-zinc-800"}
 												`}
+                        style={{ position: 'relative' }}
                       >
                         <p className="text-sm">{message.content}</p>
                         <span className="text-xs text-zinc-300 mt-1 block">
                           {formatTime(message.createdAt)}
                         </span>
+                        {/* Emoji Reactions Row */}
+                        {message.reactions && message.reactions.length > 0 && (
+                          <div className="flex gap-1 mt-2">
+                            {message.reactions.map((reaction, idx) => (
+                              <span
+                                key={idx}
+                                className={`text-lg px-1 rounded-full ${reaction.userId === user?.id ? 'bg-zinc-700' : ''}`}
+                              >
+                                {reaction.emoji}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        {/* Emoji Picker Button - only show on hover */}
+                        {hoveredMessageId === message._id && (
+                        <button
+                          className="absolute top-1 right-1 text-xl hover:scale-110 transition"
+                          onClick={() => setShowPickerFor(showPickerFor === message._id ? null : message._id)}
+                          style={{ zIndex: 2 }}
+                        >
+                          😊
+                        </button>
+                        )}
+                        {/* Emoji Picker */}
+                        {showPickerFor === message._id && (
+                          <div style={{ position: 'absolute', top: 30, right: 0, zIndex: 10 }}>
+                            <Picker
+                              data={data}
+                              onEmojiSelect={(emoji: any) => {
+                                socket.emit('message:react', {
+                                  messageId: message._id,
+                                  emoji: emoji.native,
+                                  userId: user?.id,
+                                });
+                                setShowPickerFor(null);
+                              }}
+                              previewPosition="none"
+                              skinTonePosition="none"
+                              style={{ width: 250 }}
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}

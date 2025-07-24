@@ -103,6 +103,15 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 				});
 			});
 
+			// Listen for reaction updates
+			socket.on("message:reaction-updated", (updatedMessage: Message) => {
+				set((state) => ({
+					messages: state.messages.map((msg) =>
+						msg._id === updatedMessage._id ? updatedMessage : msg
+					),
+				}));
+			});
+
 			set({ isConnected: true });
 		}
 	},

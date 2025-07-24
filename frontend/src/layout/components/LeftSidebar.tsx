@@ -21,7 +21,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 	}, [fetchAlbums]);
 
 	return (
-		<div className='h-full flex flex-col bg-black gap-2 p-2'>
+		<div className='h-full flex flex-col  gap-2 p-2'>
 			{/* Logo and Hamburger */}
 			<div className='flex items-center  justify-between py-4 '>
 				{isMobile && setSidebarOpen && (
@@ -39,7 +39,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 			</div>
 
 			{/* Navigation menu */}
-			<div className='rounded-lg bg-gradient-to-br from-gray-900  to-black text-white  p-2'>
+			<div className='rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-2 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'>
 				<div className='space-y-2'>
 					<Link
 						to={"/"}
@@ -85,7 +85,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 			</div>
 
 			{/* Library section */}
-			<div className='flex-1 rounded-lg bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  p-4'>
+			<div className='flex-1 rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-4 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'>
 				<div className='flex items-center justify-between mb-4'>
 					<div className='flex items-center text-white px-2'>
 						<Library className='size-5 mr-2' />

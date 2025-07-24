@@ -38,9 +38,7 @@ const MainLayout = () => {
 					<AudioPlayer />
 					{/* left sidebar */}
 					<div
-						className={`fixed inset-y-0 left-0 z-20 w-64 bg-black transition-transform duration-300 ${
-							sidebarOpen ? "translate-x-0" : "-translate-x-full"
-						}`}
+						className={`fixed inset-y-0 left-0 z-20 w-64 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 transition-transform duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
 					>
 						<LeftSidebar isMobile={isMobile} setSidebarOpen={setSidebarOpen} />
 					</div>

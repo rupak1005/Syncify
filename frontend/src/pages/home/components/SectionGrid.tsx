@@ -18,8 +18,8 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 				<h2 className='text-2xl font-bold'>{title}</h2>
 				<Link to='/search'>
 					<Button variant='link' className='text-sm text-zinc-400 hover:text-white'>
-						Show all
-					</Button>
+					Show all
+				</Button>
 				</Link>
 			</div>
 
@@ -27,7 +27,7 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 				{songs.map((song) => (
 					<div
 						key={song._id}
-						className='bg-zinc-800/40 p-4 rounded-md hover:bg-zinc-700/40 transition-all group cursor-pointer'
+						className='bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 p-4 rounded-md hover:bg-gray-900/70 transition-all group cursor-pointer backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'
 					>
 						<div className='relative mb-4'>
 							<div className='aspect-square rounded-md shadow-lg overflow-hidden'>

@@ -33,6 +33,7 @@ export interface Message {
 	content: string;
 	createdAt: string;
 	updatedAt: string;
+	reactions?: { emoji: string; userId: string }[];
 }
 
 export interface User {

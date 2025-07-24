@@ -12,5 +12,13 @@
 	"license": "ISC",
 	"engines": {
 		"node": "20.x"
+	},
+	"dependencies": {
+		"@emoji-mart/data": "^1.2.1",
+		"@emoji-mart/react": "^1.1.1",
+		"clsx": "^2.1.1",
+		"emoji-mart": "^5.6.0",
+		"simplex-noise": "^4.0.3",
+		"tailwind-merge": "^3.3.1"
 	}
 }

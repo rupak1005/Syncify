@@ -12,8 +12,7 @@ const Topbar = () => {
 
 	return (
 		<div
-			className='flex items-center justify-between p-4 sticky top-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white  z-10
-    '
+			className='flex items-center justify-between p-4 sticky top-0 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white z-10 backdrop-blur-md backdrop-saturate-150 border-b border-white/10 shadow-lg'
 		>
 			<div className="flex gap-2 items-center  text-xl mx-auto">
 				<img src='/logo.png' className={cn('size-8', location.pathname === '/' ? 'sm:inline hidden' : '')} alt='Spotify logo' />

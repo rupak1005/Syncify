@@ -60,7 +60,7 @@ const SongItem = ({ song }: { song: Song }) => {
 	return (
 		<div
 			onClick={handlePlay}
-			className='bg-zinc-800/40 p-2 rounded-md hover:bg-zinc-700/40 transition-all group flex items-center gap-3 sm:block sm:p-4 cursor-pointer '
+			className='bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 p-2 rounded-md hover:bg-gray-900/70 transition-all group flex items-center gap-3 sm:block sm:p-4 cursor-pointer backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'
 		>
 			<div className='relative flex-shrink-0 h-16 w-16 sm:w-full sm:h-fit sm:aspect-square sm:mb-2 rounded-md overflow-hidden'>
 				<img
