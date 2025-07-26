@@ -314,10 +314,10 @@ const ExplorePage = () => {
   };
 
   return (
-    <main className="w-full rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-1 sm:p-2 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg overflow-hidden">
+    <main className="w-full max-w-full rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-1 sm:p-2 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg overflow-hidden">
       <ScrollArea className="w-full h-[calc(100vh-120px)] pb-20">
-        <div className="w-full p-2 sm:p-4 md:p-6">
-          <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full p-2 sm:p-4 md:p-6 overflow-hidden">
+          <div className="w-full max-w-6xl mx-auto overflow-hidden">
             {/* Header Section - Mobile Responsive */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-8 gap-3 sm:gap-0 w-full">
               <div className="text-center sm:text-left flex-1 w-full ">
@@ -441,7 +441,7 @@ const ExplorePage = () => {
             </div>
 
             {/* Results */}
-            <div className="space-y-4 w-full">
+            <div className="space-y-4 w-full overflow-hidden">
               {error && (
                 <div className="text-center py-6 sm:py-8 w-full">
                   <div className="text-red-400 font-semibold mb-4 text-sm sm:text-base">{error}</div>
@@ -563,15 +563,15 @@ const ExplorePage = () => {
                 </div>
               )}
               {activeTab === "songs" && songs.length > 0 && (
-                <div className="space-y-3 sm:space-y-4 w-full">
-                  <div className="grid gap-3 sm:gap-4 w-full">
+                <div className="space-y-3 sm:space-y-4 w-full overflow-hidden">
+                  <div className="grid gap-3 sm:gap-4 w-full overflow-hidden">
                     {songs.slice(0, displayedSongsCount).map((song) => (
-                      <div
-                        key={song.videoId}
-                        className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60 transition-all duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg w-full ${
-                          currentSong?._id === song.videoId ? 'ring-2 ring-blue-500 shadow-blue-500/20' : ''
-                        }`}
-                      >
+                                              <div
+                          key={song.videoId}
+                          className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60 transition-all duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg w-full min-w-0 ${
+                            currentSong?._id === song.videoId ? 'ring-2 ring-blue-500 shadow-blue-500/20' : ''
+                          }`}
+                        >
                         {/* Thumbnail */}
                         <div className="relative flex-shrink-0">
                           <img
@@ -586,11 +586,11 @@ const ExplorePage = () => {
                         </div>
 
                         {/* Song Info */}
-                        <div className="flex-1 min-w-0 flex flex-col justify-center">
-                          <h3 className="font-semibold truncate text-xs sm:text-sm md:text-base leading-tight">
+                        <div className="flex-1 min-w-0 flex flex-col justify-center overflow-hidden">
+                          <h3 className="font-semibold truncate text-xs sm:text-sm md:text-base leading-tight break-words">
                             {song.name}
                           </h3>
-                          <p className="text-zinc-400 text-xs sm:text-sm truncate leading-tight">
+                          <p className="text-zinc-400 text-xs sm:text-sm truncate leading-tight break-words">
                             {song.artist.name}
                           </p>
                           {/* Duration - visible on larger screens */}
@@ -605,7 +605,7 @@ const ExplorePage = () => {
                         </span>
 
                         {/* Play Button */}
-                        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 min-w-0">
                           <Button
                             size="sm"
                             onClick={() => handlePlaySong(song)}
@@ -638,7 +638,7 @@ const ExplorePage = () => {
                   
                   {/* View More/Less Buttons */}
                   {songs.length > 4 && (
-                    <div className="flex justify-center pt-3 sm:pt-4 w-full">
+                    <div className="flex justify-center pt-3 sm:pt-4 w-full overflow-hidden">
                       {displayedSongsCount < songs.length ? (
                         <Button
                           onClick={handleViewMore}
@@ -661,7 +661,7 @@ const ExplorePage = () => {
               )}
 
               {activeTab === "albums" && albums.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full overflow-hidden">
                   {albums.map((album) => (
                     <div
                       key={album.albumId}
@@ -696,7 +696,7 @@ const ExplorePage = () => {
               )}
 
               {activeTab === "artists" && artists.length > 0 && (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full overflow-hidden">
                   {artists.map((artist) => (
                     <div
                       key={artist.artistId}
