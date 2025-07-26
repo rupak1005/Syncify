@@ -31,7 +31,7 @@ const Topbar = () => {
 				</SignedOut>
 
 				<UserButton />
-				<Link to="/explore" className="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold ml-2">Explore</Link>
+				<Link to="/explore" className="px-4 py-2 rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-4 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg ml-2">Explore</Link>
 			</div>
 		</div>
 	);
