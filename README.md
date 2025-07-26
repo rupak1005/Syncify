@@ -127,6 +127,8 @@ const SplashCursor = () => {
 
 A comprehensive music discovery feature that integrates with YouTube Music API, allowing users to search and play music from YouTube's vast library.
 
+> **⚠️ Important Note:** This feature works seamlessly when running locally, but when deployed to a server, YouTube may require verification for some endpoints. This is due to YouTube's bot detection system. For local development, the app uses your browser's cookies for authentication, but deployed servers don't have access to these cookies.
+
 #### 🎵 Core Features:
 
 **1. Advanced Search System:**

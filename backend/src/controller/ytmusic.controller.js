@@ -4,6 +4,8 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
+const YTDLP_BROWSER = process.env.YTDLP_BROWSER || 'chrome';
+
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Test endpoint to verify yt-dlp is working
@@ -16,7 +18,7 @@ export const testYTDLP = async (req, res) => {
     // Test with a simple video
     const testVideoId = 'dQw4w9WgXcQ'; // Rick Roll
     const testUrl = `https://www.youtube.com/watch?v=${testVideoId}`;
-    const testCommand = `yt-dlp -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" --no-warnings "${testUrl}"`;
+    const testCommand = `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" --no-warnings "${testUrl}"`;
     
     console.log('Testing yt-dlp with test video...');
     const { stdout: audioUrl } = await execAsync(testCommand);
@@ -79,7 +81,7 @@ export const streamYTMusic = async (req, res) => {
     const url = `https://www.youtube.com/watch?v=${videoId}`;
     
     // Stream the audio directly
-    const ytDlpCommand = `yt-dlp -f bestaudio --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings -o - "${url}"`;
+    const ytDlpCommand = `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings -o - "${url}"`;
     
     const child = exec(ytDlpCommand);
     
@@ -118,16 +120,16 @@ export const getAudioUrl = async (req, res) => {
     // Try multiple approaches with different options
     const approaches = [
       // Approach 1: Standard with user-agent
-      `yt-dlp -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
+      `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
       
       // Approach 2: With no-check-certificates
-      `yt-dlp -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings --no-check-certificates "${url}"`,
+      `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings --no-check-certificates "${url}"`,
       
       // Approach 3: Different format
-      `yt-dlp -f "bestaudio[ext=m4a]" --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
+      `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f "bestaudio[ext=m4a]" --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
       
       // Approach 4: With referer
-      `yt-dlp -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --referer "https://www.youtube.com/" --no-warnings "${url}"`
+      `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --referer "https://www.youtube.com/" --no-warnings "${url}"`
     ];
     
     let lastError;
