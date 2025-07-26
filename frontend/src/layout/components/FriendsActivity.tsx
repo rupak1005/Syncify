@@ -28,7 +28,7 @@ const FriendsActivity = () => {
 	};
 
 	return (
-		<div className='h-full bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg flex flex-col backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg'>
+		<div className='h-full bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg flex flex-col backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg pb-20'>
 			<div className='p-4 flex justify-between items-center border-b border-zinc-800'>
 				<div className='flex items-center gap-2'>
 					<Users className='size-5 shrink-0' />
@@ -38,8 +38,8 @@ const FriendsActivity = () => {
 
 			{!user && <LoginPrompt />}
 
-			<ScrollArea className='flex-1'>
-				<div className='p-4 space-y-4'>
+			<ScrollArea className='flex-1 min-h-0'>
+				<div className='p-4 space-y-4 min-h-full w-full'>
 					{users.map((friend) => {
 						const activity = userActivities.get(friend.clerkId);
 						const isPlaying = activity && activity !== "Idle";

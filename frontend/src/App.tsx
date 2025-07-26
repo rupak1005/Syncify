@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import NotFoundPage from "./pages/404/NotFoundPage";
 import FullScreenPlayerPage from "./pages/player/FullScreenPlayerPage";
 import AudioPlayer from "./layout/components/AudioPlayer";
+import ExplorePage from "./pages/explore/ExplorePage";
 
 function App() {
 	return (
@@ -29,6 +30,7 @@ function App() {
 					<Route path='/search' element={<SearchPage />} />
 					<Route path='/chat' element={<ChatPage />} />
 					<Route path='/albums/:albumId' element={<AlbumPage />} />
+					<Route path='/explore' element={<ExplorePage />} />
 					<Route path='*' element={<NotFoundPage />} />
 				</Route>
 

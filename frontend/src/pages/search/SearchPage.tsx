@@ -34,7 +34,7 @@ const SearchPage = () => {
 					placeholder='Search for songs or artists...'
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
-					className='w-full max-w-lg mx-auto mb-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white border-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+					className='w-full max-w-lg mx-auto mb-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white border-zinc-700 placeholder:text-zinc-400 focus:outline-cyan-950 focus:ring-1 focus:ring-blue-500'
 				/>
 				<ScrollArea className='h-[calc(100vh-300px)] '>
 					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 pr-4'>

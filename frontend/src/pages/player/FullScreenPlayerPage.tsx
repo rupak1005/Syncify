@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
-import { WavyBackground } from "./WavyBackground";
+import SplashCursor from "@/components/ui/splash-cursor";
 
 const formatTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
@@ -58,8 +58,8 @@ const FullScreenPlayerPage = () => {
   };
 
   return (
-    <WavyBackground colors={["#38bdf8","#818cf8","#c084fc","#e879f9","#22d3ee"]} blur={16} speed="fast" waveOpacity={0.4}>
-      {/* Back button - fixed to extreme top left */}
+    <>
+      <SplashCursor />
       <button
         className="fixed top-4 left-4 z-50 p-2 rounded-full bg-zinc-900/80 hover:bg-zinc-800"
         onClick={() => navigate(-1)}
@@ -71,13 +71,13 @@ const FullScreenPlayerPage = () => {
       {currentSong && (
         <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-8">
           <img
-            src={currentSong.imageUrl}
-            alt={currentSong.title}
+            src={currentSong?.imageUrl}
+            alt={currentSong?.title}
             className="w-36 h-36 sm:w-64 sm:h-64 object-cover rounded-2xl shadow-2xl mb-8 border-4 border-blue-500/30"
           />
           <div className="text-center mb-8">
-            <div className="text-3xl font-extrabold mb-2 drop-shadow-lg">{currentSong.title}</div>
-            <div className="text-xl text-zinc-300 font-medium drop-shadow">{currentSong.artist}</div>
+            <div className="text-3xl font-extrabold mb-2 drop-shadow-lg text-white">{currentSong?.title}</div>
+            <div className="text-xl text-zinc-300 font-medium drop-shadow">{currentSong?.artist}</div>
           </div>
           <div className="flex flex-col items-center w-full max-w-2xl">
             <div className="flex items-center gap-10 mb-8">
@@ -135,7 +135,7 @@ const FullScreenPlayerPage = () => {
           </div>
         </div>
       )}
-    </WavyBackground>
+    </>
   );
 };
 

@@ -17,6 +17,7 @@ import authRoutes from "./routes/auth.route.js";
 import songRoutes from "./routes/song.route.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
+import ytmusicRoutes from "./routes/ytmusic.route.js";
 
 dotenv.config();
 
@@ -82,6 +83,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/stats", statRoutes);
+app.use("/api/ytmusic", ytmusicRoutes);
 
 app.get("/api/health", (req, res) => {
 	res.status(200).json({ message: "Server is healthy" });

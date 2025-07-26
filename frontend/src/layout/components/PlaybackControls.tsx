@@ -79,7 +79,7 @@ export const PlaybackControls = () => {
 		<>
 			<Dialog open={showFullScreen} onOpenChange={setShowFullScreen}>
 				{/* Main player bar */}
-				<footer className='h-28 sm:h-24 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white border-t border-gray-900 px-3 py-2 sm:px-4 sm:py-0 fixed bottom-0 left-0 w-full z-40 backdrop-blur-md backdrop-saturate-150 border-t border-white/10 shadow-lg'>
+				<footer className='h-28 sm:h-24 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white border-1 border-gray-900 px-3 py-2 sm:px-4 sm:py-0 fixed bottom-0 left-0 w-full z-40 backdrop-blur-md backdrop-saturate-150 border-white/10 shadow-lg'>
 					{isListeningAlong && listenAlongHost && (
 						<div className='absolute -top-10 left-0 w-full bg-green-500 text-white text-center p-2 flex items-center justify-center gap-4'>
 							<Radio className='size-5' />

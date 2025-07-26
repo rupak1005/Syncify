@@ -2,7 +2,6 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/componen
 import { Outlet } from "react-router-dom";
 import LeftSidebar from "./components/LeftSidebar";
 import FriendsActivity from "./components/FriendsActivity";
-import AudioPlayer from "./components/AudioPlayer";
 import { PlaybackControls } from "./components/PlaybackControls";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
@@ -35,7 +34,6 @@ const MainLayout = () => {
 			)}
 			{isMobile ? (
 				<>
-					<AudioPlayer />
 					{/* left sidebar */}
 					<div
 						className={`fixed inset-y-0 left-0 z-20 w-64 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 transition-transform duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
@@ -49,7 +47,6 @@ const MainLayout = () => {
 				</>
 			) : (
 			<ResizablePanelGroup direction='horizontal' className='flex-1 flex h-full overflow-hidden p-2'>
-				<AudioPlayer />
 				{/* left sidebar */}
 					<ResizablePanel defaultSize={20} minSize={10} maxSize={30}>
 					<LeftSidebar />
