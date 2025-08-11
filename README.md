@@ -1,16 +1,16 @@
-# 🎧 Syncify - Full Stack Spotify Clone
+# Syncify - Full Stack Spotify Clone
 
 A real-time, full-stack Spotify clone with chat, social activity, playback, admin dashboard, and music management features — built with **React**, **Tailwind CSS**, **ShadCN UI**, **MongoDB**, **Express**, and **Socket.io**.
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 > https://advancespotify.onrender.com/
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <p align="center">
 A showcase of Syncify's user interface, from the main dashboard to the admin panels.
@@ -20,7 +20,7 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 <!-- Row 1: Home Page (Full Width) -->
 <tr>
 <td align="center" colspan="2">
-<h3>🏠 Home Page</h3>
+<h3> Home Page</h3>
 <img src="https://github.com/user-attachments/assets/8fb2fedb-35b4-4eeb-96e2-3eea47d88adc" alt="Home Page" width="90%"/>
 </td>
 </tr>
@@ -29,11 +29,11 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 
 <tr>
 <td align="center">
-<h3>🔍 Search Page</h3>
+<h3> Search Page</h3>
 <img src="https://github.com/user-attachments/assets/95dcfca7-26b9-4cb0-83ba-0a35435f4493" alt="Search Page" width="450"/>
 </td>
 <td align="center">
-<h3>💿 Album Page</h3>
+<h3> Album Page</h3>
 <img src="https://github.com/user-attachments/assets/bffa07d7-0fc5-4113-ae68-52eb51e942c2" alt="Album Page" width="450"/>
 </td>
 </tr>
@@ -42,7 +42,7 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 
 <tr>
 <td align="center" colspan="2">
-<h3>💬 Chat System</h3>
+<h3> Chat System</h3>
 <img src="https://github.com/user-attachments/assets/dd1615b3-0770-4d9f-a85f-fbdd334fb01d" alt="Chat Page" width="90%"/>
 </td>
 </tr>
@@ -51,7 +51,7 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 
 <tr>
 <td align="center" colspan="2">
-<h3>⚙️ Admin Dashboard</h3>
+<h3> Admin Dashboard</h3>
 </td>
 </tr>
 
@@ -85,20 +85,20 @@ A showcase of Syncify's user interface, from the main dashboard to the admin pan
 
 ---
 
-## 🆕 Version 2.0 - New Features
+## Version 2.0 - New Features
 
-### 🎯 Splash Cursor Component
+### Splash Cursor Component
 
 A beautiful, interactive cursor component that enhances the user experience with smooth animations and visual feedback.
 
-#### ✨ Features:
+#### Features:
 - **Smooth Animations**: Fluid cursor movements with easing functions
 - **Interactive Feedback**: Cursor responds to user interactions
 - **Customizable Styling**: Configurable colors, sizes, and effects
 - **Performance Optimized**: Uses `requestAnimationFrame` for smooth 60fps animations
 - **Cross-browser Compatible**: Works across all modern browsers
 
-#### 🛠️ Technical Implementation:
+#### Technical Implementation:
 ```typescript
 // Custom cursor with smooth following animation
 const SplashCursor = () => {
@@ -123,13 +123,13 @@ const SplashCursor = () => {
 };
 ```
 
-### 🌐 YouTube Music Explore Page
+### YouTube Music Explore Page
 
 A comprehensive music discovery feature that integrates with YouTube Music API, allowing users to search and play music from YouTube's vast library.
 
-> **⚠️ Important Note:** This feature works seamlessly when running locally, but when deployed to a server, YouTube may require verification for some endpoints. This is due to YouTube's bot detection system. For local development, the app uses your browser's cookies for authentication, but deployed servers don't have access to these cookies.
+> ** Important Note:** This feature works seamlessly when running locally, but when deployed to a server, YouTube may require verification for some endpoints. This is due to YouTube's bot detection system. For local development, the app uses your browser's cookies for authentication, but deployed servers don't have access to these cookies.
 
-#### 🎵 Core Features:
+#### Core Features:
 
 **1. Advanced Search System:**
 - **Real-time Search**: Instant results as you type
@@ -149,7 +149,7 @@ A comprehensive music discovery feature that integrates with YouTube Music API, 
 - **View More System**: Progressive disclosure (4 songs initially)
 - **Responsive Design**: Works on all screen sizes
 
-#### 🛠️ Technical Architecture:
+#### Technical Architecture:
 
 **Backend Integration:**
 ```javascript
@@ -196,7 +196,7 @@ const handleSearchInput = (value: string) => {
 4. **Player Integration** → Seamless integration with existing player store
 5. **Queue Management** → Add to existing queue or create new queue
 
-#### 🎨 UI Components:
+#### UI Components:
 
 **Search Interface:**
 - **Glassmorphic Input**: Backdrop blur with gradient borders
@@ -213,7 +213,7 @@ const handleSearchInput = (value: string) => {
 - **View More**: Progressive disclosure with count indicators
 - **Now Playing**: Visual indicators for currently playing songs
 
-#### 🔧 Advanced Features:
+#### Advanced Features:
 
 **1. Error Handling & Retry:**
 - **Graceful Error Handling**: User-friendly error messages
@@ -235,14 +235,14 @@ const handleSearchInput = (value: string) => {
 - **Tablet Support**: Adaptive layouts for medium screens
 - **Desktop Enhancement**: Full-width layouts with advanced features
 
-#### 🔒 Security & Privacy:
+#### Security & Privacy:
 - **Server-Side Proxy**: Audio URLs generated server-side
 - **Rate Limiting**: Prevents API abuse
 - **CORS Handling**: Proper cross-origin request management
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Frontend**: React, Tailwind, Zustand, Clerk, Vite, ShadCN UI
 - **Backend**: Node.js, Express, MongoDB, Mongoose
@@ -256,9 +256,9 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔄 Real-time Features & Socket.io
+### Real-time Features & Socket.io
 
 - Live user status, song activity, and chat using **Socket.io**
 - Real-time broadcast of:
@@ -268,14 +268,14 @@ const handleSearchInput = (value: string) => {
   - **Listen Along**: Sync music playback in real-time with friends
 - Real-time activity feed on the homepage via WebSockets
 
-### ✨ Features
+### Features
 
 - **Full Screen Player Mode**: Enjoy a distraction-free, immersive music experience with a dedicated full screen player for both mobile and desktop.
 - **Liquid Glass (Glassmorphism) UI**: Modern glass-like transparency and blur effects applied to the player bar, sidebars, topbar, and all song cards for a sleek, premium look.
 
 ---
 
-### 🔐 Authentication & User Management
+### Authentication & User Management
 
 - Auth handled with **Clerk**: supports Google sign-in and user profile management
 - Clerk JWT is set in Axios headers for secure backend communication
@@ -284,7 +284,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🧠 State Management
+### State Management
 
 - Powered by **Zustand**
   - Stores for music data, user auth, player state, and chat
@@ -292,7 +292,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🎧 Music Playback
+### Music Playback
 
 - Centralized music player with:
   - Play, pause, next, previous
@@ -302,7 +302,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 💬 Chat System
+### Chat System
 
 - Real-time 1-on-1 chat system with online indicators
 - Chat layout includes:
@@ -312,7 +312,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🖼️ Frontend Development
+### Frontend Development
 
 - Built with **React**, **Tailwind CSS**, and **ShadCN UI**
 - Responsive layout for mobile, tablet, and desktop
@@ -321,7 +321,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🛠️ Backend & Database
+### Backend & Database
 
 - Node.js + Express backend with modular routes:
   - `/api/users`, `/auth`, `/songs`, `/album`, `/admin`, `/stats`
@@ -331,7 +331,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🧑‍💼 Admin Functionality
+### Admin Functionality
 
 - Admin dashboard to:
   - Create new songs & albums
@@ -342,7 +342,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 📦 API & Data Fetching
+### API & Data Fetching
 
 - Zustand async fetch functions for albums, songs, users, messages
 - Global loading/error state handling
@@ -350,7 +350,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🧱 UI Components
+### UI Components
 
 - Custom UI built with:
   - ShadCN: Buttons, Dialogs, Alerts, Calendars
@@ -361,7 +361,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-### 🗑️ Production & Maintenance
+### Production & Maintenance
 
 - **Node Cron Jobs** to clean up temporary files
 - Handles CORS & same-origin communication
@@ -370,7 +370,7 @@ const handleSearchInput = (value: string) => {
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 AdvanceSpotify/
@@ -438,20 +438,20 @@ AdvanceSpotify/
 
 ---
 
-## ⚙️ Setup and Installation
+## Setup and Installation
 
 Follow the steps below to get this project running locally on your machine.
 
 ---
 
-### 🧱 1. Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/rupak1005/AdvanceSpotify.git
 cd AdvanceSpotify/
 ```
 
-### 📦 2. Install Frontend Dependencies
+### 2. Install Frontend Dependencies
 
 ```bash
 cd frontend
@@ -460,7 +460,7 @@ npm install
 yarn install
 ```
 
-### 📦 3. Install Backend Dependencies
+### 3. Install Backend Dependencies
 
 ```bash
 cd ../backend
@@ -469,7 +469,7 @@ npm install
 yarn install
 ```
 
-### 🔐 4. Configure Environment Variables
+### 4. Configure Environment Variables
 
 Create a `.env` file in the `backend/` directory with the following contents:
 
@@ -491,9 +491,9 @@ Create a `.env` file in the `frontend/` directory with the following contents:
 VITE_CLERK_PUBLISHABLE_KEY=
 ```
 
-🔒 **Make sure not to commit .env to version control.**
+ **Make sure not to commit .env to version control.**
 
-### ▶️ 5. Run the Backend Server
+### 5. Run the Backend Server
 
 ```bash
 cd backend
@@ -502,7 +502,7 @@ npm start
 yarn start
 ```
 
-### 💻 6. Run the Frontend Development Server
+### 6. Run the Frontend Development Server
 
 ```bash
 cd frontend
@@ -511,7 +511,7 @@ npm run dev
 yarn dev
 ```
 
-### 🌐 7. Access the App
+### 7. Access the App
 
 Open your browser and go to:
 
@@ -523,22 +523,22 @@ The frontend should be running on port 3000, and will communicate with the backe
 
 ---
 
-## 🧪 Future Features
+## Future Features
 
-- ⏳ Voice messages
-- ⏳ Song reactions
-- ⏳ Realtime search
-- ⏳ Chat read receipts
-- ⏳ Playlists & libraries
-- ⏳ Notifications
-- ⏳ Theme toggle (dark/light)
-- ⏳ Advanced YouTube Music features (playlists, recommendations)
-- ⏳ Enhanced splash cursor effects
-- ⏳ Music visualization
+-  Voice messages
+-  Song reactions
+-  Realtime search
+-  Chat read receipts
+-  Playlists & libraries
+-  Notifications
+-  Theme toggle (dark/light)
+-  Advanced YouTube Music features (playlists, recommendations)
+-  Enhanced splash cursor effects
+-  Music visualization
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 Rupak Saini
 
