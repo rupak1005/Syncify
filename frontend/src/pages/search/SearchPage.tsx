@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { useMusicStore } from "@/stores/useMusicStore";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import Topbar from "@/components/Topbar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PlayButton from "../home/components/PlayButton";
@@ -8,7 +8,7 @@ import { Song } from "@/types";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 
 const SearchPage = () => {
-	const { songs, fetchSongs, isLoading } = useMusicStore();
+	const { songs, fetchSongs, isFetchingSongs } = useMusicStore();
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
@@ -19,14 +19,14 @@ const SearchPage = () => {
 	// Filter songs based on the search term, or show all if search is empty
 	const filteredSongs = searchTerm
 		? songs.filter(
-				(song) =>
-					song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-		  )
+			(song) =>
+				song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				song.artist.toLowerCase().includes(searchTerm.toLowerCase())
+		)
 		: songs;
 
 	return (
-		<main className='bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen overflow-hidden'>
+		<main className='bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-full overflow-hidden'>
 			<Topbar />
 			<div className='p-4 sm:p-6'>
 				<Input
@@ -36,9 +36,9 @@ const SearchPage = () => {
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className='w-full max-w-lg mx-auto mb-6 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white border-zinc-700 placeholder:text-zinc-400 focus:outline-cyan-950 focus:ring-1 focus:ring-blue-500'
 				/>
-				<ScrollArea className='h-[calc(100vh-300px)] '>
+				<ScrollArea className='h-[calc(100vh-300px)]'>
 					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 pr-4'>
-						{isLoading && filteredSongs.length === 0 ? (
+						{isFetchingSongs && filteredSongs.length === 0 ? (
 							<p>Loading songs...</p>
 						) : (
 							filteredSongs.map((song) => <SongItem key={song._id} song={song} />)
@@ -50,7 +50,7 @@ const SearchPage = () => {
 	);
 };
 
-const SongItem = ({ song }: { song: Song }) => {
+const SongItem = memo(({ song }: { song: Song }) => {
 	const { setCurrentSong } = usePlayerStore();
 
 	const handlePlay = () => {
@@ -66,6 +66,7 @@ const SongItem = ({ song }: { song: Song }) => {
 				<img
 					src={song.imageUrl}
 					alt={song.title}
+					loading="lazy"
 					className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
 				/>
 				<div className='hidden sm:block'>
@@ -81,6 +82,6 @@ const SongItem = ({ song }: { song: Song }) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default SearchPage; 

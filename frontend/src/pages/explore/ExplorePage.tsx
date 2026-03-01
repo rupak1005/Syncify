@@ -52,8 +52,8 @@ const ExplorePage = () => {
   const [showHistory, setShowHistory] = useState(true);
   const [displayedSongsCount, setDisplayedSongsCount] = useState(4);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  
-  const { currentSong, isPlaying, setCurrentSong, queue, initializeQueue} = usePlayerStore();
+
+  const { currentSong, isPlaying, setCurrentSong, queue, initializeQueue } = usePlayerStore();
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -90,7 +90,7 @@ const ExplorePage = () => {
   const handleSearchInput = (value: string) => {
     setSearchTerm(value);
     setShowHistory(value.trim().length === 0);
-    
+
     // Clear previous timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
@@ -98,7 +98,7 @@ const ExplorePage = () => {
 
     // Show suggestions based on input
     if (value.trim()) {
-      const filtered = searchSuggestions.filter(s => 
+      const filtered = searchSuggestions.filter(s =>
         s.toLowerCase().includes(value.toLowerCase())
       );
       setSuggestions(filtered.slice(0, 5));
@@ -107,11 +107,11 @@ const ExplorePage = () => {
       setShowSuggestions(false);
     }
 
-    // Auto-search after 1 second of no typing
+    // Auto-search after 500ms of no typing (reduced from 1000ms)
     if (value.trim()) {
       searchTimeoutRef.current = setTimeout(() => {
         searchYTMusic();
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -151,7 +151,7 @@ const ExplorePage = () => {
     try {
       const response = await axiosInstance.get(`/ytmusic/search?q=${encodeURIComponent(searchTerm)}&type=${activeTab}`);
       const results = response.data || [];
-      
+
       if (activeTab === "songs") {
         // Filter only VIDEO type results for songs
         const songs = results.filter((item: any) => item.type === "VIDEO");
@@ -173,8 +173,8 @@ const ExplorePage = () => {
       }
     } catch (error) {
       console.error("Search error:", error);
-      const errorMessage = retryCount < 2 
-        ? "Search failed. Tap to retry." 
+      const errorMessage = retryCount < 2
+        ? "Search failed. Tap to retry."
         : "Failed to search YouTube Music. Please try again later.";
       setError(errorMessage);
       setSongs([]); setAlbums([]); setArtists([]);
@@ -218,7 +218,7 @@ const ExplorePage = () => {
       toast.success(`Now playing: ${song.name}`);
     } catch (error: any) {
       console.error("Play error:", error);
-      
+
       // Handle specific error types
       if (error.response?.status === 429) {
         toast.error("Too many requests. Please wait a moment and try again.");
@@ -252,11 +252,11 @@ const ExplorePage = () => {
 
     try {
       setLoadingAlbum(album.albumId);
-      
+
       // Get album tracks from backend
       const response = await axiosInstance.get(`/ytmusic/album/${album.playlistId}`);
       const tracks = response.data.tracks || [];
-      
+
       if (tracks.length === 0) {
         toast.error("No tracks found for this album");
         return;
@@ -277,7 +277,7 @@ const ExplorePage = () => {
 
       // Initialize queue with album tracks
       initializeQueue(songs);
-      
+
       // Play first track
       if (songs.length > 0) {
         const firstSong = songs[0];
@@ -386,8 +386,8 @@ const ExplorePage = () => {
                     </div>
                   )}
                 </div>
-                <Button 
-                  onClick={() => searchYTMusic()} 
+                <Button
+                  onClick={() => searchYTMusic()}
                   disabled={isLoading || !searchTerm.trim()}
                   className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg transition-all duration-300 px-4 sm:px-6"
                 >
@@ -405,11 +405,10 @@ const ExplorePage = () => {
               <Button
                 variant={activeTab === "songs" ? "default" : "outline"}
                 onClick={() => setActiveTab("songs")}
-                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${
-                  activeTab === "songs" 
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg" 
+                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${activeTab === "songs"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg"
                     : "bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60"
-                } transition-all duration-300`}
+                  } transition-all duration-300`}
               >
                 <Music className="h-3 w-3 sm:h-4 sm:w-4" />
                 Songs
@@ -417,11 +416,10 @@ const ExplorePage = () => {
               <Button
                 variant={activeTab === "albums" ? "default" : "outline"}
                 onClick={() => setActiveTab("albums")}
-                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${
-                  activeTab === "albums" 
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg" 
+                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${activeTab === "albums"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg"
                     : "bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60"
-                } transition-all duration-300`}
+                  } transition-all duration-300`}
               >
                 <Disc3 className="h-3 w-3 sm:h-4 sm:w-4" />
                 Albums
@@ -429,11 +427,10 @@ const ExplorePage = () => {
               <Button
                 variant={activeTab === "artists" ? "default" : "outline"}
                 onClick={() => setActiveTab("artists")}
-                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${
-                  activeTab === "artists" 
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg" 
+                className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm px-2 sm:px-4 py-2 flex-1 sm:flex-none ${activeTab === "artists"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg"
                     : "bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60"
-                } transition-all duration-300`}
+                  } transition-all duration-300`}
               >
                 <Users className="h-3 w-3 sm:h-4 sm:w-4" />
                 Artists
@@ -446,7 +443,7 @@ const ExplorePage = () => {
                 <div className="text-center py-6 sm:py-8 w-full">
                   <div className="text-red-400 font-semibold mb-4 text-sm sm:text-base">{error}</div>
                   {retryCount < 3 && (
-                    <Button 
+                    <Button
                       onClick={handleRetry}
                       className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg transition-all duration-300 text-sm sm:text-base"
                     >
@@ -566,17 +563,17 @@ const ExplorePage = () => {
                 <div className="space-y-3 sm:space-y-4 w-full overflow-hidden">
                   <div className="grid gap-3 sm:gap-4 w-full overflow-hidden">
                     {songs.slice(0, displayedSongsCount).map((song) => (
-                                              <div
-                          key={song.videoId}
-                          className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60 transition-all duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg w-full min-w-0 ${
-                            currentSong?._id === song.videoId ? 'ring-2 ring-blue-500 shadow-blue-500/20' : ''
+                      <div
+                        key={song.videoId}
+                        className={`group relative flex items-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 rounded-lg hover:from-gray-800/60 hover:via-gray-900/60 hover:to-black/60 transition-all duration-300 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg w-full min-w-0 ${currentSong?._id === song.videoId ? 'ring-2 ring-blue-500 shadow-blue-500/20' : ''
                           }`}
-                        >
+                      >
                         {/* Thumbnail */}
                         <div className="relative flex-shrink-0">
                           <img
                             src={getThumbnailUrl(song.thumbnails)}
                             alt={song.name}
+                            loading="lazy"
                             className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover rounded shadow-lg"
                           />
                           {/* Play overlay on hover */}
@@ -610,11 +607,10 @@ const ExplorePage = () => {
                             size="sm"
                             onClick={() => handlePlaySong(song)}
                             disabled={currentPlayingId === song.videoId}
-                            className={`${
-                              currentSong?._id === song.videoId 
-                                ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-green-500/20' 
+                            className={`${currentSong?._id === song.videoId
+                                ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-green-500/20'
                                 : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-blue-500/20'
-                            } backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg transition-all duration-300 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 p-0 hover:scale-105 active:scale-95`}
+                              } backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg transition-all duration-300 h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 p-0 hover:scale-105 active:scale-95`}
                           >
                             {currentPlayingId === song.videoId ? (
                               <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 animate-spin" />
@@ -635,7 +631,7 @@ const ExplorePage = () => {
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* View More/Less Buttons */}
                   {songs.length > 4 && (
                     <div className="flex justify-center pt-3 sm:pt-4 w-full overflow-hidden">
@@ -670,6 +666,7 @@ const ExplorePage = () => {
                       <img
                         src={getThumbnailUrl(album.thumbnails)}
                         alt={album.name}
+                        loading="lazy"
                         className="w-full aspect-square object-cover rounded mb-2 sm:mb-3"
                       />
                       <h3 className="font-semibold truncate text-sm sm:text-base">{album.name}</h3>
@@ -705,6 +702,7 @@ const ExplorePage = () => {
                       <img
                         src={getThumbnailUrl(artist.thumbnails)}
                         alt={artist.name}
+                        loading="lazy"
                         className="w-16 h-16 sm:w-24 sm:h-24 object-cover rounded-full mx-auto mb-2 sm:mb-3"
                       />
                       <h3 className="font-semibold truncate text-sm sm:text-base">{artist.name}</h3>

@@ -7,6 +7,12 @@ interface MusicStore {
 	songs: Song[];
 	albums: Album[];
 	isLoading: boolean;
+	isFetchingAlbums: boolean;
+	isFetchingAlbum: boolean;
+	isFetchingFeaturedSongs: boolean;
+	isFetchingMadeForYou: boolean;
+	isFetchingTrending: boolean;
+	isFetchingSongs: boolean;
 	error: string | null;
 	currentAlbum: Album | null;
 	featuredSongs: Song[];
@@ -19,6 +25,7 @@ interface MusicStore {
 	fetchFeaturedSongs: () => Promise<void>;
 	fetchMadeForYouSongs: () => Promise<void>;
 	fetchTrendingSongs: () => Promise<void>;
+	fetchHomeSongs: () => Promise<void>;
 	fetchStats: () => Promise<void>;
 	fetchSongs: () => Promise<void>;
 	deleteSong: (id: string) => Promise<void>;
@@ -29,6 +36,12 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	albums: [],
 	songs: [],
 	isLoading: false,
+	isFetchingAlbums: false,
+	isFetchingAlbum: false,
+	isFetchingFeaturedSongs: false,
+	isFetchingMadeForYou: false,
+	isFetchingTrending: false,
+	isFetchingSongs: false,
 	error: null,
 	currentAlbum: null,
 	madeForYouSongs: [],
@@ -77,14 +90,14 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	},
 
 	fetchSongs: async () => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingSongs: true, error: null });
 		try {
 			const response = await axiosInstance.get("/songs");
-			set({ songs: response.data });
+			set({ songs: response.data.songs || response.data });
 		} catch (error: any) {
 			set({ error: error.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingSongs: false });
 		}
 	},
 
@@ -101,7 +114,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
 	},
 
 	fetchAlbums: async () => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingAlbums: true, error: null });
 
 		try {
 			const response = await axiosInstance.get("/albums");
@@ -109,56 +122,72 @@ export const useMusicStore = create<MusicStore>((set) => ({
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingAlbums: false });
 		}
 	},
 
 	fetchAlbumById: async (id) => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingAlbum: true, error: null });
 		try {
 			const response = await axiosInstance.get(`/albums/${id}`);
 			set({ currentAlbum: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingAlbum: false });
 		}
 	},
 
 	fetchFeaturedSongs: async () => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingFeaturedSongs: true, error: null });
 		try {
 			const response = await axiosInstance.get("/songs/featured");
 			set({ featuredSongs: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingFeaturedSongs: false });
 		}
 	},
 
 	fetchMadeForYouSongs: async () => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingMadeForYou: true, error: null });
 		try {
 			const response = await axiosInstance.get("/songs/made-for-you");
 			set({ madeForYouSongs: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingMadeForYou: false });
 		}
 	},
 
-	
+	// Batched fetch: gets all home page songs in a single API call
+	fetchHomeSongs: async () => {
+		set({ isFetchingFeaturedSongs: true, isFetchingMadeForYou: true, isFetchingTrending: true, error: null });
+		try {
+			const response = await axiosInstance.get("/songs/home");
+			set({
+				featuredSongs: response.data.featured,
+				madeForYouSongs: response.data.madeForYou,
+				trendingSongs: response.data.trending,
+			});
+		} catch (error: any) {
+			set({ error: error.response?.data?.message || error.message });
+		} finally {
+			set({ isFetchingFeaturedSongs: false, isFetchingMadeForYou: false, isFetchingTrending: false });
+		}
+	},
+
 	fetchTrendingSongs: async () => {
-		set({ isLoading: true, error: null });
+		set({ isFetchingTrending: true, error: null });
 		try {
 			const response = await axiosInstance.get("/songs/trending");
 			set({ trendingSongs: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });
 		} finally {
-			set({ isLoading: false });
+			set({ isFetchingTrending: false });
 		}
 	},
 }));

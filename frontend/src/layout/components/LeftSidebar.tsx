@@ -14,16 +14,16 @@ interface LeftSidebarProps {
 }
 
 const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
-	const { albums, fetchAlbums, isLoading } = useMusicStore();
+	const { albums, fetchAlbums, isFetchingAlbums } = useMusicStore();
 
 	useEffect(() => {
 		fetchAlbums();
 	}, [fetchAlbums]);
 
 	return (
-		<div className='h-full flex flex-col  gap-2 p-2'>
+		<div className='h-full flex flex-col gap-2 p-2'>
 			{/* Logo and Hamburger */}
-			<div className='flex items-center  justify-between py-4 '>
+			<div className='flex items-center justify-between py-4'>
 				{isMobile && setSidebarOpen && (
 					<button
 						className='md:hidden p-2 rounded-md bg-zinc-900/80 hover:bg-zinc-800 mr-2'
@@ -59,7 +59,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 						className={cn(
 							buttonVariants({
 								variant: "ghost",
-								className: "w-full justify-start  text-white hover:bg-zinc-800",
+								className: "w-full justify-start text-white hover:bg-zinc-800",
 							})
 						)}
 					>
@@ -73,7 +73,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 							className={cn(
 								buttonVariants({
 									variant: "ghost",
-									className: "w-full justify-start  text-white hover:bg-zinc-800",
+									className: "w-full justify-start text-white hover:bg-zinc-800",
 								})
 							)}
 						>
@@ -95,7 +95,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 
 				<ScrollArea className='h-[calc(100vh-300px)]'>
 					<div className='space-y-2'>
-						{isLoading ? (
+						{isFetchingAlbums ? (
 							<PlaylistSkeleton />
 						) : (
 							albums.map((album) => (
@@ -107,6 +107,7 @@ const LeftSidebar = ({ isMobile, setSidebarOpen }: LeftSidebarProps) => {
 									<img
 										src={album.imageUrl}
 										alt='Playlist img'
+										loading='lazy'
 										className='size-12 rounded-md flex-shrink-0 object-cover'
 									/>
 

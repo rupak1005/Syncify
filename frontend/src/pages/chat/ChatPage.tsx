@@ -35,10 +35,10 @@ const ChatPage = () => {
     if (selectedUser) fetchMessages(selectedUser.clerkId);
   }, [selectedUser, fetchMessages]);
 
-  console.log({ messages });
+
 
   return (
-    <main className="bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen overflow-hidden">
+    <main className="bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-full overflow-hidden">
       <Topbar />
 
       <div className="grid lg:grid-cols-[250px_1fr] grid-cols-[80px_1fr] h-[calc(100vh-150px)] ">
@@ -56,9 +56,8 @@ const ChatPage = () => {
                   {messages.map((message) => (
                     <div
                       key={message._id}
-                      className={`flex items-start gap-3 ${
-                        message.senderId === user?.id ? "flex-row-reverse" : ""
-                      }`}
+                      className={`flex items-start gap-3 ${message.senderId === user?.id ? "flex-row-reverse" : ""
+                        }`}
                     >
                       <Avatar className="size-8">
                         <AvatarImage

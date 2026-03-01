@@ -6,6 +6,8 @@ import path from "path";
 import cors from "cors";
 import fs from "fs";
 import { createServer } from "http";
+import compression from "compression";
+import helmet from "helmet";
 import cron from "node-cron";
 
 import { initializeSocket } from "./lib/socket.js";
@@ -48,7 +50,9 @@ app.use(
 	})
 );
 
-app.use(express.json()); // to parse req.body
+app.use(compression()); // gzip all responses
+app.use(helmet()); // security headers + removes X-Powered-By
+app.use(express.json({ limit: '1mb' })); // parse req.body with payload limit
 app.use(clerkMiddleware()); // this will add auth to req obj => req.auth
 app.use(
 	fileUpload({
@@ -71,7 +75,7 @@ cron.schedule("0 * * * *", () => {
 				return;
 			}
 			for (const file of files) {
-				fs.unlink(path.join(tempDir, file), (err) => {});
+				fs.unlink(path.join(tempDir, file), (err) => { });
 			}
 		});
 	}
@@ -89,6 +93,17 @@ app.get("/api/health", (req, res) => {
 	res.status(200).json({ message: "Server is healthy" });
 });
 
+// Serve frontend in production with long cache headers for hashed assets
+if (process.env.NODE_ENV === "production") {
+	const __dirname = path.resolve();
+	app.use(express.static(path.join(__dirname, "../frontend/dist"), {
+		maxAge: '1y',
+		immutable: true,
+	}));
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+	});
+}
 
 // error handler
 app.use((err, req, res, next) => {

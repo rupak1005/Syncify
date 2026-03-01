@@ -214,7 +214,7 @@ export const PlaybackControls = () => {
 
 									<Button
 										size='icon'
-										className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
+										className='bg-blue-500 hover:bg-blue-400 text-black rounded-full h-8 w-8'
 										onClick={togglePlay}
 										disabled={!currentSong || isListeningAlong}
 									>
@@ -314,7 +314,7 @@ export const PlaybackControls = () => {
 									</Button>
 									<Button
 										size='icon'
-										className='bg-white hover:bg-white/80 text-black rounded-full h-12 w-12 sm:h-16 sm:w-16'
+										className='bg-blue-500 hover:bg-blue-400 text-black rounded-full h-12 w-12 sm:h-16 sm:w-16'
 										onClick={togglePlay}
 										disabled={!currentSong || isListeningAlong}
 									>

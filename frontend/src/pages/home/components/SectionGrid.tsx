@@ -18,8 +18,8 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 				<h2 className='text-2xl font-bold'>{title}</h2>
 				<Link to='/search'>
 					<Button variant='link' className='text-sm text-zinc-400 hover:text-white'>
-					Show all
-				</Button>
+						Show all
+					</Button>
 				</Link>
 			</div>
 
@@ -34,6 +34,7 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 								<img
 									src={song.imageUrl}
 									alt={song.title}
+									loading='lazy'
 									className='w-full h-full object-cover transition-transform duration-300 
 									group-hover:scale-105'
 								/>

@@ -14,14 +14,14 @@ const Topbar = () => {
 		<div
 			className='flex items-center justify-between p-4 sticky top-0 bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white z-10 backdrop-blur-md backdrop-saturate-150 border-b border-white/10 shadow-lg'
 		>
-			<div className="flex gap-2 items-center  text-xl mx-auto">
+			<div className="flex gap-2 items-center text-xl mx-auto">
 				<img src='/logo.png' className={cn('size-8', location.pathname === '/' ? 'sm:inline hidden' : '')} alt='Spotify logo' />
-				Syncify
+				<span className='font-bold'>Syncify</span>
 			</div>
 			<div className='flex items-center gap-2'>
 				{isAdmin && (
 					<Link to={"/admin"} className={cn(buttonVariants({ variant: "outline" }))}>
-						<LayoutDashboardIcon className='size-4  mr-2 ' />
+						<LayoutDashboardIcon className='size-4 mr-2' />
 						<span className="sm:inline hidden">Admin Dashboard</span>
 					</Link>
 				)}
@@ -31,7 +31,12 @@ const Topbar = () => {
 				</SignedOut>
 
 				<UserButton />
-				<Link to="/explore" className="px-4 py-2 rounded-lg bg-gradient-to-br from-gray-900/60 via-gray-950/60 to-black/60 text-white p-4 backdrop-blur-md backdrop-saturate-150 border border-white/10 shadow-lg ml-2">Explore</Link>
+				<Link
+					to="/explore"
+					className={cn(buttonVariants({ variant: "outline" }), "ml-2")}
+				>
+					Explore
+				</Link>
 			</div>
 		</div>
 	);

@@ -8,31 +8,45 @@ const YTDLP_BROWSER = process.env.YTDLP_BROWSER || 'chrome';
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+// In-memory cache for audio URLs (YouTube URLs are valid for ~6 hours)
+const audioUrlCache = new Map();
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours (conservative)
+
+// Periodically clean expired cache entries every 30 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, value] of audioUrlCache) {
+    if (now - value.timestamp > CACHE_TTL) {
+      audioUrlCache.delete(key);
+    }
+  }
+}, 30 * 60 * 1000);
+
 // Test endpoint to verify yt-dlp is working
 export const testYTDLP = async (req, res) => {
   try {
     console.log('Testing yt-dlp availability...');
     const { stdout } = await execAsync('yt-dlp --version');
     console.log('yt-dlp version:', stdout.trim());
-    
+
     // Test with a simple video
     const testVideoId = 'dQw4w9WgXcQ'; // Rick Roll
     const testUrl = `https://www.youtube.com/watch?v=${testVideoId}`;
     const testCommand = `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" --no-warnings "${testUrl}"`;
-    
+
     console.log('Testing yt-dlp with test video...');
     const { stdout: audioUrl } = await execAsync(testCommand);
-    
-    res.json({ 
-      success: true, 
+
+    res.json({
+      success: true,
       ytdlpVersion: stdout.trim(),
       testAudioUrl: audioUrl.trim(),
       message: 'yt-dlp is working correctly'
     });
   } catch (error) {
     console.error('yt-dlp test failed:', error);
-    res.status(500).json({ 
-      success: false, 
+    res.status(500).json({
+      success: false,
       error: error.message,
       stderr: error.stderr,
       message: 'yt-dlp test failed'
@@ -46,9 +60,9 @@ export const searchYTMusic = async (req, res) => {
     if (!q) {
       return res.status(400).json({ message: 'Query parameter is required' });
     }
-    
-    // Search for all types and let frontend filter
-    const results = await searchYouTubeMusic(q);
+
+    // Search for the requested type (songs, albums, artists)
+    const results = await searchYouTubeMusic(q, type);
     res.json(results);
   } catch (error) {
     console.error('Search error:', error);
@@ -62,7 +76,7 @@ export const getYTMusicSong = async (req, res) => {
     if (!videoId) {
       return res.status(400).json({ message: 'Video ID is required' });
     }
-    
+
     const songDetails = await getSongDetails(videoId);
     res.json(songDetails);
   } catch (error) {
@@ -77,28 +91,28 @@ export const streamYTMusic = async (req, res) => {
     if (!videoId) {
       return res.status(400).json({ message: 'Video ID is required' });
     }
-    
+
     const url = `https://www.youtube.com/watch?v=${videoId}`;
-    
+
     // Stream the audio directly
     const ytDlpCommand = `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings -o - "${url}"`;
-    
+
     const child = exec(ytDlpCommand);
-    
+
     res.setHeader('Content-Type', 'audio/mpeg');
     res.setHeader('Transfer-Encoding', 'chunked');
-    
+
     child.stdout.pipe(res);
-    
+
     child.stderr.on('data', (data) => {
       console.error('yt-dlp stderr:', data.toString());
     });
-    
+
     child.on('error', (error) => {
       console.error('Stream error:', error);
       res.status(500).end();
     });
-    
+
     req.on('close', () => {
       child.kill();
     });
@@ -115,33 +129,42 @@ export const getAudioUrl = async (req, res) => {
       return res.status(400).json({ message: 'Video ID is required' });
     }
 
+    // Check cache first
+    const cached = audioUrlCache.get(videoId);
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      console.log(`Cache hit for video ${videoId}`);
+      return res.json({ audioUrl: cached.url });
+    }
+
     const url = `https://www.youtube.com/watch?v=${videoId}`;
-    
+
     // Try multiple approaches with different options
     const approaches = [
       // Approach 1: Standard with user-agent
       `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
-      
+
       // Approach 2: With no-check-certificates
       `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings --no-check-certificates "${url}"`,
-      
+
       // Approach 3: Different format
       `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f "bestaudio[ext=m4a]" --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --no-warnings "${url}"`,
-      
+
       // Approach 4: With referer
       `yt-dlp --cookies-from-browser ${YTDLP_BROWSER} -f bestaudio --get-url --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" --referer "https://www.youtube.com/" --no-warnings "${url}"`
     ];
-    
+
     let lastError;
-    
+
     for (let i = 0; i < approaches.length; i++) {
       try {
         console.log(`Trying approach ${i + 1} for video ${videoId}...`);
         const { stdout } = await execAsync(approaches[i]);
         const audioUrl = stdout.trim();
-        
+
         if (audioUrl && audioUrl.startsWith('http')) {
           console.log(`Success with approach ${i + 1} for video ${videoId}`);
+          // Store in cache
+          audioUrlCache.set(videoId, { url: audioUrl, timestamp: Date.now() });
           return res.json({ audioUrl });
         } else {
           console.log(`Approach ${i + 1} returned invalid URL:`, audioUrl);
@@ -149,13 +172,13 @@ export const getAudioUrl = async (req, res) => {
       } catch (error) {
         lastError = error;
         console.error(`Approach ${i + 1} failed for video ${videoId}:`, error.message);
-        
+
         // If it's a rate limit or bot verification, don't try other approaches
         if (error.stderr && (error.stderr.includes('429') || error.stderr.includes('Sign in to confirm'))) {
           console.log('Rate limit or bot verification detected, stopping attempts');
           break;
         }
-        
+
         // Wait a bit before trying the next approach
         if (i < approaches.length - 1) {
           console.log('Waiting 2 seconds before next attempt...');
@@ -163,35 +186,35 @@ export const getAudioUrl = async (req, res) => {
         }
       }
     }
-    
+
     // If we get here, all approaches failed
     console.error('All approaches failed for video', videoId, ':', lastError);
-    
+
     // Check if it's a rate limit error
     if (lastError && lastError.stderr && lastError.stderr.includes('429')) {
-      return res.status(429).json({ 
+      return res.status(429).json({
         message: 'YouTube rate limit reached. Please try again in a few minutes.',
         error: 'RATE_LIMIT'
       });
     }
-    
+
     // Check if it's a bot verification error
     if (lastError && lastError.stderr && lastError.stderr.includes('Sign in to confirm')) {
-      return res.status(403).json({ 
+      return res.status(403).json({
         message: 'YouTube requires verification. Please try again later.',
         error: 'BOT_VERIFICATION'
       });
     }
-    
+
     // Generic error response
-    res.status(500).json({ 
+    res.status(500).json({
       message: 'Failed to get audio URL. Please try again.',
       error: 'AUDIO_URL_ERROR',
       details: lastError ? lastError.message : 'Unknown error'
     });
   } catch (error) {
     console.error('Get audio URL error for video', req.query.videoId, ':', error);
-    res.status(500).json({ 
+    res.status(500).json({
       message: 'Failed to get audio URL',
       error: 'AUDIO_URL_ERROR',
       details: error.message
@@ -205,7 +228,7 @@ export const getAlbumTracks = async (req, res) => {
     if (!playlistId) {
       return res.status(400).json({ message: 'Playlist ID is required' });
     }
-    
+
     const albumDetails = await getPlaylistDetails(playlistId);
     res.json(albumDetails);
   } catch (error) {

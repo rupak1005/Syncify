@@ -31,4 +31,8 @@ const songSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
+songSchema.index({ createdAt: -1 });
+songSchema.index({ albumId: 1 });
+songSchema.index({ artist: 1 });
+
 export const Song = mongoose.model("Song", songSchema);

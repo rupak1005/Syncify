@@ -1,6 +1,7 @@
 import { Song } from "../models/song.model.js";
 import { Album } from "../models/album.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import fs from "fs";
 
 // helper function for cloudinary uploads
 const uploadToCloudinary = async (file) => {
@@ -8,6 +9,8 @@ const uploadToCloudinary = async (file) => {
 		const result = await cloudinary.uploader.upload(file.tempFilePath, {
 			resource_type: "auto",
 		});
+		// Clean up temp file immediately
+		fs.unlink(file.tempFilePath, () => { });
 		return result.secure_url;
 	} catch (error) {
 		console.log("Error in uploadToCloudinary", error);

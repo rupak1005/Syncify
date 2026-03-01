@@ -21,7 +21,7 @@ export const initializeSocket = (server) => {
 		}
 
 		socket.emit("users_online", Array.from(userSockets.keys()));
-		io.emit("activities", Array.from(userActivities.entries()));
+		socket.emit("activities", Array.from(userActivities.entries()));
 
 		socket.on("user_connected", (userId) => {
 			userSockets.set(userId, socket.id);

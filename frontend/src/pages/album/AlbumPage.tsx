@@ -14,14 +14,14 @@ export const formatDuration = (seconds: number) => {
 
 const AlbumPage = () => {
 	const { albumId } = useParams();
-	const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
+	const { fetchAlbumById, currentAlbum, isFetchingAlbum } = useMusicStore();
 	const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
 	useEffect(() => {
 		if (albumId) fetchAlbumById(albumId);
 	}, [fetchAlbumById, albumId]);
 
-	if (isLoading) return null;
+	if (isFetchingAlbum) return null;
 
 	const handlePlayAlbum = () => {
 		if (!currentAlbum) return;
@@ -47,7 +47,7 @@ const AlbumPage = () => {
 				<div className='relative min-h-full'>
 					{/* bg gradient */}
 					<div
-						className='absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen pointer-events-none'
+						className='absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white pointer-events-none'
 						aria-hidden='true'
 					/>
 
@@ -57,6 +57,7 @@ const AlbumPage = () => {
 							<img
 								src={currentAlbum?.imageUrl}
 								alt={currentAlbum?.title}
+								loading='lazy'
 								className='w-32 h-32 sm:w-[240px] sm:h-[240px] shadow-xl rounded mx-auto sm:mx-0'
 							/>
 							<div className='flex flex-col justify-end items-center sm:items-start text-center sm:text-left w-full'>
@@ -122,7 +123,12 @@ const AlbumPage = () => {
 												</div>
 
 												<div className='flex items-center gap-3'>
-													<img src={song.imageUrl} alt={song.title} className='size-8 sm:size-10' />
+													<img
+														src={song.imageUrl}
+														alt={song.title}
+														loading='lazy'
+														className='size-8 sm:size-10'
+													/>
 
 													<div>
 														<div className={`font-medium text-white`}>{song.title}</div>

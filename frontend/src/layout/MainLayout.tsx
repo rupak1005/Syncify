@@ -11,13 +11,18 @@ const MainLayout = () => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	useEffect(() => {
+		let timeoutId: NodeJS.Timeout;
 		const checkMobile = () => {
-			setIsMobile(window.innerWidth < 768);
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => setIsMobile(window.innerWidth < 768), 150);
 		};
 
 		checkMobile();
 		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
+		return () => {
+			window.removeEventListener("resize", checkMobile);
+			clearTimeout(timeoutId);
+		};
 	}, []);
 
 	return (
@@ -46,25 +51,25 @@ const MainLayout = () => {
 					</div>
 				</>
 			) : (
-			<ResizablePanelGroup direction='horizontal' className='flex-1 flex h-full overflow-hidden p-2'>
-				{/* left sidebar */}
+				<ResizablePanelGroup direction='horizontal' className='flex-1 flex h-full overflow-hidden p-2'>
+					{/* left sidebar */}
 					<ResizablePanel defaultSize={20} minSize={10} maxSize={30}>
-					<LeftSidebar />
-				</ResizablePanel>
-				<ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
-				{/* Main content */}
+						<LeftSidebar />
+					</ResizablePanel>
+					<ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
+					{/* Main content */}
 					<ResizablePanel defaultSize={60} minSize={40}>
-					<Outlet />
-				</ResizablePanel>
+						<Outlet />
+					</ResizablePanel>
 					{(
-					<>
-						<ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
-						<ResizablePanel defaultSize={20} minSize={0} maxSize={25} collapsedSize={0}>
-							<FriendsActivity />
-						</ResizablePanel>
-					</>
-				)}
-			</ResizablePanelGroup>
+						<>
+							<ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
+							<ResizablePanel defaultSize={20} minSize={0} maxSize={25} collapsedSize={0}>
+								<FriendsActivity />
+							</ResizablePanel>
+						</>
+					)}
+				</ResizablePanelGroup>
 			)}
 			<PlaybackControls />
 		</div>

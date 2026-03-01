@@ -8,10 +8,9 @@ import { usePlayerStore } from "@/stores/usePlayerStore";
 
 const HomePage = () => {
 	const {
-		fetchFeaturedSongs,
-		fetchMadeForYouSongs,
-		fetchTrendingSongs,
-		isLoading,
+		fetchHomeSongs,
+		isFetchingMadeForYou,
+		isFetchingTrending,
 		madeForYouSongs,
 		featuredSongs,
 		trendingSongs,
@@ -20,10 +19,9 @@ const HomePage = () => {
 	const { initializeQueue } = usePlayerStore();
 
 	useEffect(() => {
-		fetchFeaturedSongs();
-		fetchMadeForYouSongs();
-		fetchTrendingSongs();
-	}, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
+		// Single batched API call instead of 3 separate calls
+		fetchHomeSongs();
+	}, [fetchHomeSongs]);
 
 	useEffect(() => {
 		if (madeForYouSongs.length > 0 && featuredSongs.length > 0 && trendingSongs.length > 0) {
@@ -33,7 +31,7 @@ const HomePage = () => {
 	}, [initializeQueue, madeForYouSongs, trendingSongs, featuredSongs]);
 
 	return (
-		<main className='rounded-md overflow-hidden bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-screen'>
+		<main className='rounded-md overflow-hidden bg-gradient-to-br from-gray-900 via-gray-950 to-black text-white h-full'>
 			<Topbar />
 			<ScrollArea className='h-[calc(100vh-180px)]'>
 				<div className='p-4 sm:p-6'>
@@ -41,8 +39,8 @@ const HomePage = () => {
 					<FeaturedSection />
 
 					<div className='space-y-8'>
-						<SectionGrid title='Made For You' songs={madeForYouSongs} isLoading={isLoading} />
-						<SectionGrid title='Trending' songs={trendingSongs} isLoading={isLoading} />
+						<SectionGrid title='Made For You' songs={madeForYouSongs} isLoading={isFetchingMadeForYou} />
+						<SectionGrid title='Trending' songs={trendingSongs} isLoading={isFetchingTrending} />
 					</div>
 				</div>
 			</ScrollArea>
