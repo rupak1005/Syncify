@@ -25,7 +25,7 @@ dotenv.config();
 
 const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const httpServer = createServer(app);
 initializeSocket(httpServer);
@@ -34,7 +34,7 @@ const allowedOrigins = [
 	"http://localhost:3000",
 	"http://localhost:5173",
 	"https://advancespotify.onrender.com",
-	"https://advancespotify3.onrender.com/"
+	"https://advancespotify-1.onrender.com"
 ];
 
 app.use(
@@ -43,6 +43,7 @@ app.use(
 			if (!origin || allowedOrigins.includes(origin)) {
 				callback(null, true);
 			} else {
+				console.log("CORS blocked for origin:", origin);
 				callback(new Error("Not allowed by CORS"));
 			}
 		},
